@@ -1,29 +1,24 @@
-
 extern "C" {
     #include "lib/raylib.h"
 }
 
 #include <iostream>
-using namespace std;
+using std::cout; 
 
-int main()
-{
-    int screenWidth = 800;
-    int screenHeight = 600;
+int main(void) { 
 
-    InitWindow(screenWidth, screenHeight, "title test m");
+int screenWidth = 800; 
+int screenHeight = 600; 
 
-    SetTargetFPS(60);//limita de frameuri
-    
-    Texture2D guy = LoadTexture("resources/square.png");
-    //default pos
-    cout << screenWidth / 2;
-    float guyx = screenWidth/2;
-    float guyy = screenHeight/2;
+InitWindow(screenWidth, screenHeight, "title test m"); SetTargetFPS(60);//limita de frameuri 
+                                                                                                
+Texture2D guy = LoadTexture("resources/square.png"); //default pos 
 
-    //ok
-    int playerspeed;
-    playerspeed = 5;
+float guyx = screenWidth/2; 
+float guyy = screenHeight/2; 
+
+int playerspeed = 5;
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -32,7 +27,10 @@ int main()
         if (IsKeyDown(KEY_W))
         {
             guyy=guyy-playerspeed;
-            if(guyy>=1)
+
+            //THIS IS WHERE I UPDATED IT.
+            //it didnt work because "guyy >= 1", it checks if its greater than 1, which in this case it would quite always be
+            if(guyy <= 1) 
             {
                 guyy = guyy + playerspeed;
             }
@@ -41,7 +39,10 @@ int main()
         if (IsKeyDown(KEY_S))
         {
             guyy=guyy+playerspeed;
-            if (guyy >= screenHeight)
+
+            // n is the height of the texture so its not a single line
+            // plus 5 for the invisible border
+            if (guyy >= screenHeight - (100 + 5))
             {
                 guyy = guyy - playerspeed;
             }
