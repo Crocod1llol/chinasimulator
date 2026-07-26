@@ -7,17 +7,20 @@ using std::cout;
 
 int main(void) { 
 
-int screenWidth = 800; 
-int screenHeight = 600; 
+    int screenWidth = 800; 
+    int screenHeight = 600; 
 
-InitWindow(screenWidth, screenHeight, "title test m"); SetTargetFPS(60);//limita de frameuri 
+    InitWindow(screenWidth, screenHeight, "title test m"); 
+
+    SetTargetFPS(60);//limita de frameuri 
                                                                                                 
-Texture2D guy = LoadTexture("resources/square.png"); //default pos 
+    Texture2D guy = LoadTexture("resources/player.png"); 
 
-float guyx = screenWidth/2; 
-float guyy = screenHeight/2; 
+    //default pos 
+    float guyx = screenWidth/2; 
+    float guyy = screenHeight/2; 
 
-int playerspeed = 5;
+    int playerspeed = 5;
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -41,7 +44,7 @@ int playerspeed = 5;
             guyy=guyy+playerspeed;
 
             // n is the height of the texture so its not a single line
-            // plus 5 for the invisible border
+            // plus 5 for the invisible borde
             if (guyy >= screenHeight - (100 + 5))
             {
                 guyy = guyy - playerspeed;
