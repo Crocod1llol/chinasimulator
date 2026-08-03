@@ -1,3 +1,3 @@
 # chinasimulator
 
-il iubim pe puya slava cerului lui puya
+ching chong chang ching china biribong chang ching $$$$$$$$$$$$$
