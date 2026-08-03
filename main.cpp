@@ -4,21 +4,13 @@ extern "C" {
 
 #include <iostream>
 
-typedef struct interact_part {
+//own headers
+#include "src/headers/general_parts.hpp"
+#include "src/headers/home.hpp"
 
-    float x;
-    float y;
-
-    float sizeX;
-    float sizeY;
-
-    Texture tex;
-
-    bool isInteracted = false;
-
-    Rectangle hitbox = {x, y, sizeX, sizeY};
-
-} interact_part;
+//var to keep track of the room
+//0 - home, 1 - outside home, more soon
+int room = 0;
 
 int main(void) { 
 
@@ -26,10 +18,14 @@ int main(void) {
     const int screenHeight = 600; 
 
     InitWindow(screenWidth, screenHeight, "title test m"); 
+    InitAudioDevice();
 
     SetTargetFPS(60);//limita de frameuri 
+                     
+    //sfx
+    Sound door_int = LoadSound("resources/sfx/door_int.ogg");
                                                                                                 
-    Texture2D guyTex = LoadTexture("resources/player.png"); 
+    Texture2D guyTex = LoadTexture("resources/img/player.png"); 
 
     //guy base stats
     int guyHp = 100;
@@ -45,8 +41,8 @@ int main(void) {
 
     int playerspeed = 3;
 
-    //interactable part test
-    interact_part tester1 = {20, 300, 100, 75, LoadTexture("resources/test_100x75.png")};
+    //the default room is home, so init home
+    init_home();   
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -105,13 +101,30 @@ int main(void) {
             }
         }
 
-        //checks if player near object and he pressed "E"
-        if (CheckCollisionRecs(guyHitbox, tester1.hitbox) && IsKeyDown(KEY_E)) {
+        //check if room is home
+        if (room == 0) {
 
-            tester1.isInteracted = true;
-        } else {
+            //checks if player near object and he pressed "E"
+            for (auto i : int_parts) {
+                if (CheckCollisionRecs(guyHitbox, i.hitbox) && IsKeyDown(KEY_E)) {
 
-            tester1.isInteracted = false;
+                      i.isInteracted = true;
+                } else {
+
+                      i.isInteracted = false;
+                }
+            }
+
+            //this is the door
+            //and now we need to transport the player somewhere diferent
+            if (CheckCollisionRecs(guyHitbox, outside_door_from_home.hitbox) && IsKeyDown(KEY_E)) {
+
+                //sfx
+                PlaySound(door_int);
+
+                //go to another room
+                room = 1;
+            } 
         }
 
 
@@ -119,20 +132,34 @@ int main(void) {
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(LIGHTGRAY);
 
         DrawTexture(guyTex, guyX, guyY, WHITE);
 
-        //interact test
-        DrawTexture(tester1.tex, tester1.x, tester1.y, WHITE);
+        //this is all part of room 0, aka home
+        if (room == 0) {
+
+            //draw all doors
+            for (auto i : doors) {
+
+                DrawTexture(i.tex, i.x, i.y, WHITE);
+            }
+            
+            //draw all interactable parts
+            for (auto i : int_parts) {
+
+                DrawTexture(i.tex, i.x, i.y, WHITE);
+            }
         
-        //the "GUI" if you interacted with the object
-        if (tester1.isInteracted) {
+            //the "GUI" if you interacted with the object
+            if (tester1.isInteracted) {
 
-            //btw so they are on the middle, i divide by 2 on the pos based on the width and height
-            DrawRectangle(screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200, GRAY);;
+                //btw so they are on the middle, i divide by 2 on the pos based on the width and height
+                DrawRectangle(screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200, GRAY);;
 
-            DrawRectangleLinesEx((Rectangle){screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200}, 5, BLACK);
+                DrawRectangleLinesEx((Rectangle){screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200}, 5, BLACK);
+            }
+
         }
 
         //the stat "menu"
@@ -154,6 +181,7 @@ int main(void) {
     // De-Initialization
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
+    CloseAudioDevice();
     //--------------------------------------------------------------------------------------
         
     return 0;
