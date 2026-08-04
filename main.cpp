@@ -45,10 +45,10 @@ int main(void) {
     init_home();   
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        //cod----------------------------------------------------------------------
-        
+    while (!WindowShouldClose()) {
+
+        //PLAYER -----------------------------------------------------
+
         //player hitbox stays here so it updates
         Rectangle guyHitbox = {guyX, guyY, guyWidth, guyHeight};
         
@@ -101,30 +101,58 @@ int main(void) {
             }
         }
 
-        //check if room is home
-        if (room == 0) {
+        //MAP OBEJCTS -----------------------------------------------------------------------
+        
+        //run map logic based on room
+        switch (room) {
 
-            //checks if player near object and he pressed "E"
-            for (auto i : int_parts) {
-                if (CheckCollisionRecs(guyHitbox, i.hitbox) && IsKeyDown(KEY_E)) {
+            //home
+            case 0:
 
-                      i.isInteracted = true;
-                } else {
+                //checks if player near object and he pressed "E"
+                //using address so it modifies the actual object, not a copy of it
+                for (long unsigned int i = 0; i < home_int_parts.size(); i++) {
 
-                      i.isInteracted = false;
+                    //alias so i dont have to type home_int_parts.at(i) everytime
+                    auto &a = home_int_parts.at(i);
+                    
+                    //set var based on if its colliding hitboxes and E being held
+                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, a->hitbox)) {
+
+                        a->isInteracted = true;
+
+                        continue;
+
+                    } else {
+
+                        a->isInteracted = false;
+                    }
                 }
-            }
 
-            //this is the door
-            //and now we need to transport the player somewhere diferent
-            if (CheckCollisionRecs(guyHitbox, outside_door_from_home.hitbox) && IsKeyDown(KEY_E)) {
+                //this is the door
+                //and now we need to transport the player somewhere diferent
+                if (CheckCollisionRecs(guyHitbox, outside_door_from_home.hitbox) && IsKeyDown(KEY_E)) {
 
-                //sfx
-                PlaySound(door_int);
+                     //sfx
+                     PlaySound(door_int);
 
-                //go to another room
-                room = 1;
-            } 
+                     //go to another room
+                     room = 1;
+                } 
+
+                break;
+
+            //outside of house
+            case 1:
+
+
+                break;
+
+            //if something somehow goes wrong
+            default:
+                std::cout << "game is sad, room var is modified, game is sad \n";
+                return -1;
+
         }
 
 
@@ -136,29 +164,40 @@ int main(void) {
 
         DrawTexture(guyTex, guyX, guyY, WHITE);
 
-        //this is all part of room 0, aka home
-        if (room == 0) {
+        //render everything to its room
+        switch (room) {
 
-            //draw all doors
-            for (auto i : doors) {
+            //this is all part of room 0, aka home
+            case 0:
 
-                DrawTexture(i.tex, i.x, i.y, WHITE);
-            }
+                //draw all doors
+                for (auto& i : home_doors) {
+
+                     DrawTexture(i.tex, i.x, i.y, WHITE);
+                }
             
-            //draw all interactable parts
-            for (auto i : int_parts) {
+                //draw all interactable parts
+                for (auto &i : home_int_parts) {
 
-                DrawTexture(i.tex, i.x, i.y, WHITE);
-            }
+                     DrawTexture(i->tex, i->x, i->y, WHITE);
+                }
         
-            //the "GUI" if you interacted with the object
-            if (tester1.isInteracted) {
+                //the "GUI" if you interacted with the object
+                if (tester1.isInteracted) {
 
-                //btw so they are on the middle, i divide by 2 on the pos based on the width and height
-                DrawRectangle(screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200, GRAY);;
+                     //btw so they are on the middle, i divide by 2 on the pos based on the width and height
+                     DrawRectangle(screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200, GRAY);
 
-                DrawRectangleLinesEx((Rectangle){screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200}, 5, BLACK);
-            }
+                     DrawRectangleLinesEx((Rectangle){screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200}, 5, BLACK);
+                }
+
+                break;
+
+            //if it somehow goes wrong
+            default:
+                std::cout << "game is sad, room var is modified, game is sad \n";
+                return -1;
+                break;
 
         }
 
