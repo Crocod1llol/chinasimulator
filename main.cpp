@@ -1,3 +1,4 @@
+//this file houses the logic behind the player, the initialization of other files and logic of objects and stats
 extern "C" {
     #include "lib/raylib.h"
 }
@@ -7,6 +8,7 @@ extern "C" {
 //own headers
 #include "src/headers/general_parts.hpp"
 #include "src/headers/home.hpp"
+#include "src/headers/outside_home.hpp"
 
 //var to keep track of the room
 //0 - home, 1 - outside home, more soon
@@ -41,8 +43,9 @@ int main(void) {
 
     int playerspeed = 3;
 
-    //the default room is home, so init home
-    init_home();   
+    //init places
+    init_home();
+    init_outside_home();
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -109,6 +112,7 @@ int main(void) {
             //home
             case 0:
 
+
                 //checks if player near object and he pressed "E"
                 //using address so it modifies the actual object, not a copy of it
                 for (long unsigned int i = 0; i < home_int_parts.size(); i++) {
@@ -131,10 +135,15 @@ int main(void) {
 
                 //this is the door
                 //and now we need to transport the player somewhere diferent
-                if (CheckCollisionRecs(guyHitbox, outside_door_from_home.hitbox) && IsKeyDown(KEY_E)) {
+                if (CheckCollisionRecs(guyHitbox, outside_door_from_home.hitbox) && IsKeyPressed(KEY_E)) {
 
                      //sfx
                      PlaySound(door_int);
+                     
+                     //set pos to the other door 
+                     guyX = outside_door_to_home.x;
+                     //subtract guyHeight so it doesnt spawn in the door
+                     guyY = outside_door_to_home.y - guyHeight;
 
                      //go to another room
                      room = 1;
@@ -145,12 +154,26 @@ int main(void) {
             //outside of house
             case 1:
 
+                //the door to home
+                if (CheckCollisionRecs(guyHitbox, outside_door_to_home.hitbox) && IsKeyPressed(KEY_E)) {
+
+                     //sfx
+                     PlaySound(door_int);
+                     
+                     //set pos to the other door 
+                     guyX = outside_door_from_home.x;
+                     //add door height so it doesnt spawn in door
+                     guyY = outside_door_from_home.y + outside_door_from_home.sizeY;
+
+                     //go to another room
+                     room = 0;
+                }
 
                 break;
 
             //if something somehow goes wrong
             default:
-                std::cout << "game is sad, room var is modified, game is sad \n";
+                std::cout << "switch_case_logic: game is sad, room var is modified \n";
                 return -1;
 
         }
@@ -162,7 +185,6 @@ int main(void) {
 
         ClearBackground(LIGHTGRAY);
 
-        DrawTexture(guyTex, guyX, guyY, WHITE);
 
         //render everything to its room
         switch (room) {
@@ -182,7 +204,7 @@ int main(void) {
                      DrawTexture(i->tex, i->x, i->y, WHITE);
                 }
         
-                //the "GUI" if you interacted with the object
+                //the "GUI" if you interacted with the cool object
                 if (tester1.isInteracted) {
 
                      //btw so they are on the middle, i divide by 2 on the pos based on the width and height
@@ -193,9 +215,27 @@ int main(void) {
 
                 break;
 
+            //outside of house
+            case 1:
+
+                //grass.
+                DrawTexture(outside_home_grass, 0, 0, WHITE);
+
+                //draw from vectors
+                for (auto i : outside_home_parts) {
+                    DrawTexture(i.tex, i.x, i.y, WHITE);
+                }
+
+                for (auto i: outside_exits) {
+
+                    DrawTexture(i -> tex, i -> x, i -> y, WHITE);
+                }
+
+                break;
+
             //if it somehow goes wrong
             default:
-                std::cout << "game is sad, room var is modified, game is sad \n";
+                std::cout << "switch_case_draw: game is sad, room var is modified \n";
                 return -1;
                 break;
 
@@ -212,6 +252,9 @@ int main(void) {
 
         DrawText(TextFormat("Health: %d", guyHp), screenWidth - 210, 40, 20, RED);
         DrawText(TextFormat("Hunger: %d", guyHunger), screenWidth - 210, 65, 20, ORANGE);
+
+        //draw player here so he overlaps all
+        DrawTexture(guyTex, guyX, guyY, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
