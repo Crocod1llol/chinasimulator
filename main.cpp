@@ -6,6 +6,8 @@ extern "C" {
 #include <iostream>
 
 //own headers
+#include "src/headers/player.hpp"
+
 #include "src/headers/general_parts.hpp"
 #include "src/headers/home.hpp"
 #include "src/headers/outside_home.hpp"
@@ -26,22 +28,8 @@ int main(void) {
                      
     //sfx
     Sound door_int = LoadSound("resources/sfx/door_int.ogg");
-                                                                                                
-    Texture2D guyTex = LoadTexture("resources/img/player.png"); 
 
-    //guy base stats
-    int guyHp = 100;
-    int guyHunger = 100;
-
-    //default pos 
-    float guyX = screenWidth/2; 
-    float guyY = screenHeight/2; 
-
-    //size
-    const float guyWidth = 100;
-    const float guyHeight = 100;
-
-    int playerspeed = 3;
+    init_player();
 
     //init places
     init_home();
@@ -53,56 +41,11 @@ int main(void) {
         //PLAYER -----------------------------------------------------
 
         //player hitbox stays here so it updates
-        Rectangle guyHitbox = {guyX, guyY, guyWidth, guyHeight};
+        guyHitbox = {guyX, guyY, guyWidth, guyHeight};
         
-        //vertical
-        if (IsKeyDown(KEY_W))
-        {
-            guyY=guyY-playerspeed;
+        //run player loop in main loop
+        player_loop();
 
-            //THIS IS WHERE I UPDATED IT.
-            //it didnt work because "guyy >= 1", it checks if its greater than 1, which in this case it would quite always be
-            if(guyY <= 5) 
-            {
-                guyY = guyY + playerspeed;
-            }
-            
-        }
-        if (IsKeyDown(KEY_S))
-        {
-            guyY=guyY+playerspeed;
-
-            // n is the height of the texture so its not a single line
-            // plus 5 for the invisible borde
-            if (guyY >= screenHeight - (100 + 10))
-            {
-                guyY = guyY - playerspeed;
-            }
-        }
-
-        //horizontal
-        if (IsKeyDown(KEY_D))
-        {
-            guyX=guyX+playerspeed;
-
-            //here, its the same deal as going down
-            //the border is too far, so we modify by player width (100)
-            if (guyX >= screenWidth - (100 + 10)) {
-
-                guyX = screenWidth - (100 + 10);
-            }
-        }
-
-        if (IsKeyDown(KEY_A))
-        {
-            guyX=guyX-playerspeed;
-
-            //here its more simpler
-            if (guyX <= 0 + 10) {
-
-                guyX = 0 + 10;
-            }
-        }
 
         //MAP OBEJCTS -----------------------------------------------------------------------
         
