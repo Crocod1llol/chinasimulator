@@ -11,6 +11,7 @@ extern "C" {
 #include "src/headers/general_parts.hpp"
 #include "src/headers/home.hpp"
 #include "src/headers/outside_home.hpp"
+#include "src/headers/items.hpp"
 
 //var to keep track of the room
 //0 - home, 1 - outside home, more soon
@@ -18,18 +19,23 @@ int room = 0;
 
 int main(void) { 
 
-    const int screenWidth = 800; 
-    const int screenHeight = 600; 
+    const int screenWidth = 1000; 
+    const int screenHeight = 800; 
 
     InitWindow(screenWidth, screenHeight, "title test m"); 
     InitAudioDevice();
 
     SetTargetFPS(60);//limita de frameuri 
                      
+    //textures that i dont know where to put them so ill leave them in the main.cpp file cause yeah
+    Texture2D container_6_slots = LoadTexture("resources/img/other/container_6_slots.png");
+
     //sfx
     Sound door_int = LoadSound("resources/sfx/door_int.ogg");
 
+	//init
     init_player();
+    init_items();
 
     //init places
     init_home();
@@ -150,10 +156,8 @@ int main(void) {
                 //the "GUI" if you interacted with the cool object
                 if (tester1.isInteracted) {
 
-                     //btw so they are on the middle, i divide by 2 on the pos based on the width and height
-                     DrawRectangle(screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200, GRAY);
 
-                     DrawRectangleLinesEx((Rectangle){screenWidth/2 - (300 / 2), screenHeight/2 - (200 / 2), 300, 200}, 5, BLACK);
+                    DrawTexture(container_6_slots, screenWidth/2 - (300 / 2), screenHeight/2 - (300 / 2), WHITE);
                 }
 
                 break;
@@ -184,6 +188,10 @@ int main(void) {
 
         }
 
+
+        //draw player here so he overlaps all
+        DrawTexture(guyTex, guyX, guyY, WHITE);
+
         //the stat "menu"
         //temp: it is only the text of the stats, ill want it to be some sort of a bar or smth
 
@@ -196,8 +204,8 @@ int main(void) {
         DrawText(TextFormat("Health: %d", guyHp), screenWidth - 210, 40, 20, RED);
         DrawText(TextFormat("Hunger: %d", guyHunger), screenWidth - 210, 65, 20, ORANGE);
 
-        //draw player here so he overlaps all
-        DrawTexture(guyTex, guyX, guyY, WHITE);
+        //draw inv slots
+        DrawTexture(inventorySlot, 25, 25, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
