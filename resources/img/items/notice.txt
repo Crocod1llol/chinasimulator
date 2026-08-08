@@ -1,0 +1,1 @@
+item textures must be 32x32
