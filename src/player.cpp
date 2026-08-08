@@ -1,10 +1,14 @@
+//btw, this file also includes player inventory, so yeah
 extern "C" {
     #include "../lib/raylib.h"
 }
 
-//#include <vector>
+#include <vector>
 
+//all textures
 Texture2D guyTex;
+
+Texture2D inventorySlot;
 
 //all player variables
 
@@ -25,11 +29,16 @@ int playerspeed = 3;
 //it will get defined in the main loop so its values will update
 Rectangle guyHitbox;
 
+//the vector that contains all item ids in inventory
+std::vector <size_t> inventory_items;
+
 //init variables and other stuff
 void init_player() {
 
     //textures
     guyTex = LoadTexture("resources/img/textures/player.png");
+
+    inventorySlot = LoadTexture("resources/img/other/inventory_slot.png");
 
     //init vars
     guyX = GetRenderWidth()/2;
