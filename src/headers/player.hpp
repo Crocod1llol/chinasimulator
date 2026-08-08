@@ -1,8 +1,12 @@
+#include <vector>
+
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-//texture
+//textures
 extern Texture2D guyTex;
+
+extern Texture2D inventorySlot;
 
 //player vars
 
@@ -24,6 +28,9 @@ extern int playerspeed;
 //hitbox rectangle
 //it will get defined in the main loop so its values will update
 extern Rectangle guyHitbox;
+
+//the vector that contains all item ids in inventory
+extern std::vector <size_t> inventory_items;
 
 
 //functions
