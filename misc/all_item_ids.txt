@@ -1,2 +1,4 @@
-0 - test object, it just plays a fart sound
+NOTICE: item textures must be 32x32
 
+0 - nothing, a specifier for that it isnt an item
+1 - test object, it just plays a fart sound
