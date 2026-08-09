@@ -7,13 +7,13 @@ extern "C" {
 
 //array that contains all possible item ids
 //check misc/all_item_ids.txt for all ids and respective object
-const int all_ids[] = {0, 1};
+const int all_ids[] = {1};
 
 
 //other resources
 //textures for all items
 
-Texture2D test_object_0;
+Texture2D test_object_1;
 
 //sound
 Sound troll;
