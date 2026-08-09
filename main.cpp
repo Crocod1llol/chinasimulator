@@ -12,6 +12,7 @@ extern "C" {
 #include "src/headers/home.hpp"
 #include "src/headers/outside_home.hpp"
 #include "src/headers/items.hpp"
+#include "src/headers/supermarket.hpp"
 
 //var to keep track of the room
 //0 - home, 1 - outside home, more soon
@@ -40,6 +41,7 @@ int main(void) {
     //init places
     init_home();
     init_outside_home();
+    initshop();
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -120,6 +122,23 @@ int main(void) {
                      //go to another room
                      room = 0;
                 }
+                if (CheckCollisionRecs(guyHitbox, outside_supermarket.hitbox) && IsKeyPressed(KEY_E)) {
+
+                    //sfx
+                    PlaySound(door_int);
+
+                    //set pos to the other door 
+                    //guyX = outside_door_from_home.x;
+                    //add door height so it doesnt spawn in door
+                    //guyY = outside_door_from_home.y + outside_door_from_home.sizeY;
+
+                    //go to another room
+                    room = 2;
+                }
+
+                break;
+
+            case 2:
 
                 break;
 
@@ -180,13 +199,18 @@ int main(void) {
 
                     DrawTexture(i -> tex, i -> x, i -> y, WHITE);
                 }
-
+                DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
                 break;
 
             //if it somehow goes wrong
             default:
                 std::cout << "switch_case_draw: game is sad, room var is modified \n";
                 return -1;
+                break;
+
+            case 2:
+                //background
+                DrawTexture(floortileshop, 0, 0, WHITE);
                 break;
 
         }
@@ -213,6 +237,7 @@ int main(void) {
 
         DrawText(TextFormat("Health: %d", guyHp), screenWidth - 210, 40, 20, RED);
         DrawText(TextFormat("Hunger: %d", guyHunger), screenWidth - 210, 65, 20, ORANGE);
+        DrawText(TextFormat("Cash¥: %d", cash), screenWidth - 210, 85, 20, GREEN);
 
         //draw inv slots
         DrawTexture(inventorySlot, 25, 25, WHITE);
