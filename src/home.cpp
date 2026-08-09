@@ -26,9 +26,9 @@ interact_part tester2;
 void init_home() {
 
     //initiate objects when the window is open
-    outside_door_from_home = {350, 0, 90, 150, LoadTexture("resources/img/door_90x150.png")};
-    tester1 = {20, 300, 100, 75, LoadTexture("resources/img/test_100x75.png")};
-    tester2 = {600, 220, 100, 75, LoadTexture("resources/img/test_100x75.png")};
+    outside_door_from_home = {350, 0, 90, 150, LoadTexture("resources/img/textures/door_90x150.png")};
+    tester1 = {20, 300, 100, 75, LoadTexture("resources/img/textures/test_100x75.png")};
+    tester2 = {600, 220, 100, 75, LoadTexture("resources/img/textures/test_100x75.png")};
 
     //push to vectors
     home_int_parts.push_back(&tester1);
