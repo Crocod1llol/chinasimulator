@@ -44,6 +44,9 @@ int main(void) {
     // Main game loop
     while (!WindowShouldClose()) {
 
+        //mouse hitbox
+        //Rectangle mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
+
         //PLAYER -----------------------------------------------------
 
         //player hitbox stays here so it updates
@@ -189,6 +192,13 @@ int main(void) {
         }
 
 
+        //draw all items.
+        for (auto& i : spawned_items) {
+
+            DrawTexture(i -> tex, i -> x, i -> y, WHITE);
+        }
+
+
         //draw player here so he overlaps all
         DrawTexture(guyTex, guyX, guyY, WHITE);
 
@@ -206,6 +216,13 @@ int main(void) {
 
         //draw inv slots
         DrawTexture(inventorySlot, 25, 25, WHITE);
+
+        //debug menu
+        if (IsKeyDown(KEY_F3)) {
+
+            DrawText(TextFormat("Mouse X: %d", GetMouseX()), 0, 5, 15, BLACK);
+            DrawText(TextFormat("Mouse Y: %d", GetMouseY()), 0, 20, 15, BLACK);
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------
