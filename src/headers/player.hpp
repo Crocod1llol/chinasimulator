@@ -13,6 +13,7 @@ extern Texture2D inventorySlot;
 //guy base stats
 extern int guyHp;
 extern int guyHunger;
+extern int cash;
 
 //pos
 extern float guyX;
