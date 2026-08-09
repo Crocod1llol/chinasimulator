@@ -33,6 +33,15 @@ extern Rectangle guyHitbox;
 extern std::vector <size_t> inventory_items;
 
 
+//all slot positions
+//the Y is the same, so yeah
+#define guySlotY 55
+#define guySlot1X 59
+
+#define guySlot2X 112
+
+#define guySlot3X 166
+
 //functions
 void init_player();
 
