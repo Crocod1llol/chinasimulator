@@ -20,6 +20,7 @@ Part maybe_flowers;
 
 //doors/gateways
 interact_part outside_door_to_home;
+interact_part outside_supermarket;
 
 void init_outside_home() {
     //the outside grass
@@ -29,7 +30,7 @@ void init_outside_home() {
     //interactable parts
     //the Y value just makes the door appear the the bottom
     outside_door_to_home = {400, (float)GetRenderHeight() - 150, 90, 150, LoadTexture("resources/img/textures/door_90x150.png")};
-
+    outside_supermarket = { 700,300, 300,200, LoadTexture("resources/img/textures/supermarket300x200.png") };
     //Parts
     maybe_flowers = {75, 170, 150, 100, LoadTexture("resources/img/textures/bad_flowers_150x100.png")};
 
@@ -41,3 +42,4 @@ void init_outside_home() {
     //exists vector
     outside_exits.push_back(&outside_door_to_home);
 }
+
