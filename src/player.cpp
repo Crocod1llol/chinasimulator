@@ -15,6 +15,8 @@ Texture2D inventorySlot;
 //guy base stats
 int guyHp = 100;
 int guyHunger = 100;
+int cash = 100;
+int card = 0;
 
 //default pos
 //the default X and Y are left undefined here is because
@@ -23,7 +25,7 @@ float guyX;
 float guyY;
 
 //others
-int playerspeed = 3;
+int playerspeed = 5;
 
 //hitbox rectangle
 //it will get defined in the main loop so its values will update
