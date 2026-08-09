@@ -12,6 +12,8 @@ extern Part maybe_flowers;
 
 //exits
 extern interact_part outside_door_to_home;
+extern interact_part outside_supermarket;
+
 
 //vectors
 extern std::vector <Part> outside_home_parts;
