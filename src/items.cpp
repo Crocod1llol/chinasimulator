@@ -7,7 +7,7 @@ extern "C" {
 
 //array that contains all possible item ids
 //check misc/all_item_ids.txt for all ids and respective object
-const int all_ids[] = {1};
+const int all_ids[] = {0, 1};
 
 
 //other resources
@@ -36,7 +36,7 @@ void init_items() {
     troll = LoadSound("resources/sfx/items/troll.ogg");
 
     //init all structs
-    test_item = {100, 200, 1, 2, "test obj", test_object_0};
+    test_item = {100, 200, 1, 2, "test obj", test_object_1};
 
     //insert into vectors
     spawned_items.push_back(&test_item);
