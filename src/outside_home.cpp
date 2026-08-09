@@ -27,7 +27,8 @@ void init_outside_home() {
     //definition
 
     //interactable parts
-    outside_door_to_home = {400, 450, 90, 150, LoadTexture("resources/img/textures/door_90x150.png")};
+    //the Y value just makes the door appear the the bottom
+    outside_door_to_home = {400, (float)GetRenderHeight() - 150, 90, 150, LoadTexture("resources/img/textures/door_90x150.png")};
 
     //Parts
     maybe_flowers = {75, 170, 150, 100, LoadTexture("resources/img/textures/bad_flowers_150x100.png")};
