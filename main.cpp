@@ -14,8 +14,9 @@ extern "C" {
 #include "src/headers/items.hpp"
 #include "src/headers/supermarket.hpp"
 
+
 //var to keep track of the room
-//0 - home, 1 - outside home, more soon
+//0 - home, 1 - outside home, 2 - supermarket, 
 int room = 0;
 
 int main(void) { 
@@ -51,16 +52,16 @@ int main(void) {
 
         //PLAYER -----------------------------------------------------
 
-        //player hitbox stays here so it updates
+        //player hitbox stays here so it updates with the new values of the vars
         guyHitbox = {guyX, guyY, guyWidth, guyHeight};
         
-        //run player loop in main loop
-        player_loop();
+        //run player, movement, actions every frame
+        every_frame_player();
 
 
         //MAP OBEJCTS -----------------------------------------------------------------------
         
-        //run map logic based on room
+        //run all parts collisions, interaction, logic based on what room we are in
         switch (room) {
 
             //home
@@ -69,21 +70,16 @@ int main(void) {
 
                 //checks if player near object and he pressed "E"
                 //using address so it modifies the actual object, not a copy of it
-                for (long unsigned int i = 0; i < home_int_parts.size(); i++) {
-
-                    //alias so i dont have to type home_int_parts.at(i) everytime
-                    auto &a = home_int_parts.at(i);
+                for (auto i : home_int_parts) {
                     
                     //set var based on if its colliding hitboxes and E being held
-                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, a->hitbox)) {
+                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
 
-                        a->isInteracted = true;
-
-                        continue;
+                        i->isInteracted = true;
 
                     } else {
 
-                        a->isInteracted = false;
+                        i->isInteracted = false;
                     }
                 }
 
@@ -138,7 +134,9 @@ int main(void) {
 
                 break;
 
+            //the supermarket
             case 2:
+                //for now, no interactable parts/ collision has been implemented
 
                 break;
 
@@ -157,7 +155,7 @@ int main(void) {
         ClearBackground(LIGHTGRAY);
 
 
-        //render everything to its room
+        //draw everything that needs to be drawn in the respective room
         switch (room) {
 
             //this is all part of room 0, aka home
@@ -190,7 +188,7 @@ int main(void) {
                 //grass.
                 DrawTexture(outside_home_grass, 0, 0, WHITE);
 
-                //draw from vectors
+                //draw from vector
                 for (auto i : outside_home_parts) {
                     DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
@@ -201,6 +199,13 @@ int main(void) {
                 }
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
                 break;
+                
+            //the supermarket
+            case 2:
+                //background
+                DrawTexture(floortileshop, 0, 0, WHITE);
+
+                break;
 
             //if it somehow goes wrong
             default:
@@ -208,19 +213,16 @@ int main(void) {
                 return -1;
                 break;
 
-            case 2:
-                //background
-                DrawTexture(floortileshop, 0, 0, WHITE);
-                break;
+
 
         }
 
 
         //draw all items.
-        for (auto& i : spawned_items) {
+        //for (auto& i : spawned_items) {
 
-            DrawTexture(i -> tex, i -> x, i -> y, WHITE);
-        }
+            //DrawTexture(i -> tex, i -> x, i -> y, WHITE);
+        //}
 
 
         //draw player here so he overlaps all
@@ -237,7 +239,7 @@ int main(void) {
 
         DrawText(TextFormat("Health: %d", guyHp), screenWidth - 210, 40, 20, RED);
         DrawText(TextFormat("Hunger: %d", guyHunger), screenWidth - 210, 65, 20, ORANGE);
-        DrawText(TextFormat("Cash¥: %d", cash), screenWidth - 210, 85, 20, GREEN);
+        DrawText(TextFormat("Cash�: %d", cash), screenWidth - 210, 90, 20, GREEN);
 
         //draw inv slots
         DrawTexture(inventorySlot, 25, 25, WHITE);
@@ -245,8 +247,8 @@ int main(void) {
         //debug menu
         if (IsKeyDown(KEY_F3)) {
 
-            DrawText(TextFormat("Mouse X: %d", GetMouseX()), 0, 5, 15, BLACK);
-            DrawText(TextFormat("Mouse Y: %d", GetMouseY()), 0, 20, 15, BLACK);
+            DrawText(TextFormat("Mouse X: %d", GetMouseX()), 0, 5, 20, BLACK);
+            DrawText(TextFormat("Mouse Y: %d", GetMouseY()), 0, 25, 20, BLACK);
         }
 
         EndDrawing();
