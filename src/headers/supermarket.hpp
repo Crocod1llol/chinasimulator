@@ -1,10 +1,11 @@
 #ifndef SUPERMARKET_HPP
 #define SUPERMARKET_HPP
 
-// code
-
-
+//the background
 extern Texture2D floortileshop;
+
+
+//funcs
 void initshop();
 
 #endif
