@@ -10,10 +10,11 @@ extern Texture2D inventorySlot;
 
 //player vars
 
-//guy base stats
+//the stats for the player
 extern int guyHp;
 extern int guyHunger;
 extern int cash;
+extern int card;
 
 //pos
 extern float guyX;
@@ -46,7 +47,7 @@ extern std::vector <size_t> inventory_items;
 //functions
 void init_player();
 
-void player_loop();
+void every_frame_player();
 
 
 #endif
