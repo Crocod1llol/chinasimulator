@@ -60,6 +60,13 @@ typedef struct container {
 } container;
 
 //a struct to help me manage items
+/*
+  NOTICE: for now i have no plans to use this struct since i will just be using item ids to choose 
+  what to draw, what function it will do, etc
+
+*/
+
+/*
 typedef struct item {
 
     float x;
@@ -87,5 +94,6 @@ typedef struct item {
     Rectangle hitbox = {x, y, 32, 32};
 
 } item;
+*/
 
 #endif
