@@ -12,7 +12,7 @@ Texture2D inventorySlot;
 
 //all player variables
 
-//guy base stats
+//all player's stats
 int guyHp = 100;
 int guyHunger = 100;
 int cash = 100;
@@ -21,6 +21,7 @@ int card = 0;
 //default pos
 //the default X and Y are left undefined here is because
 //they depend on getRenderWidth and height, which may run when window is uninit
+//which results in undefined behavior
 float guyX;
 float guyY;
 
@@ -48,9 +49,8 @@ void init_player() {
 
 }
 
-//the every frame code that needs to run for the player
-//ex. moving
-void player_loop() {
+//code that needs to run every frame for the player
+void every_frame_player() {
 
     //PLAYER MOVEMENT -------------------------
 
