@@ -4,7 +4,7 @@
 #define ITEMS_HPP
 
 //extern structs
-struct item;
+//struct item;
 
 //array that contains all possible item ids
 //check misc/all_item_ids.txt for all ids and respective object
@@ -20,11 +20,17 @@ extern Texture2D test_object_1;
 
 extern Sound troll;
 
+/*
+  NOTICE: for now i have no plans to use this struct system since i will just be using item ids to choose 
+  what to draw, what function it will do, etc
+
+*/
+
 //all currently spawned items
-extern item test_item;
+//extern item test_item;
 
 //extern vectors to keep track of the items
-extern std::vector <item*> spawned_items;
+//extern std::vector <item*> spawned_items;
 
 //funcs
 void init_items();
