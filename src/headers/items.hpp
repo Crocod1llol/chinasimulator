@@ -4,7 +4,7 @@
 #define ITEMS_HPP
 
 //extern structs
-//struct item;
+struct item;
 
 //array that contains all possible item ids
 //check misc/all_item_ids.txt for all ids and respective object
@@ -34,6 +34,7 @@ extern Sound troll;
 
 //funcs
 void init_items();
+void every_frame_func_items();
 
 //ALL ITEM EXECUTION FUNCTIONS
 //format: *return type* *item name*_*id_func(*args*)
