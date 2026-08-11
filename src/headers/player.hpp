@@ -37,7 +37,7 @@ extern std::vector <size_t> inventory_items;
 
 //all slot positions
 //the Y is the same, so yeah
-#define guySlotY 55
+#define guySlotY 57
 #define guySlot1X 59
 
 #define guySlot2X 112
