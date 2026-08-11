@@ -19,6 +19,10 @@ extern "C" {
 //0 - home, 1 - outside home, 2 - supermarket, 
 int room = 0;
 
+//misc rectangles
+//they are placed here (in global) so all .cpp files can use it without getting linker errors
+Rectangle mouseHitbox;
+
 int main(void) { 
 
     const int screenWidth = 1000; 
@@ -35,6 +39,7 @@ int main(void) {
     //sfx
     Sound door_int = LoadSound("resources/sfx/door_int.ogg");
 
+
 	//init
     init_player();
     init_items();
@@ -47,8 +52,8 @@ int main(void) {
     // Main game loop
     while (!WindowShouldClose()) {
 
-        //mouse hitbox
-        //Rectangle mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
+        //update mouse hitbox with new vars 
+        mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
 
         //PLAYER -----------------------------------------------------
 
@@ -57,7 +62,6 @@ int main(void) {
         
         //run player, movement, actions every frame
         every_frame_player();
-
 
         //MAP OBEJCTS -----------------------------------------------------------------------
         
@@ -243,6 +247,11 @@ int main(void) {
 
         //draw inv slots
         DrawTexture(inventorySlot, 25, 25, WHITE);
+
+        //run items code that need to run every frame
+        //ITS BEING RAN IN THE DRAWING SECTIONS BECAUSE IT ALSO DRAWS TEXTURES
+        every_frame_func_items();
+
 
         //debug menu
         if (IsKeyDown(KEY_F3)) {
