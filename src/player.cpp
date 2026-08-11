@@ -33,7 +33,7 @@ int playerspeed = 5;
 Rectangle guyHitbox;
 
 //the vector that contains all item ids in inventory
-std::vector <size_t> inventory_items;
+std::vector <size_t> inventory_items = {1, 0, 0};
 
 //init variables and other stuff
 void init_player() {
