@@ -74,6 +74,7 @@ void every_frame_func_items() {
     //jokes aside, yeah im checking in every slot to see what to render 
     //in what item spot and what action to do when clicked
     
+    //first inventory slot
     switch(inventory_items.at(0)) {
 
         //0 belongs to void, or nothing
@@ -87,12 +88,65 @@ void every_frame_func_items() {
             DrawTexture(test_object_1, guySlot1X, guySlotY, WHITE);
 
             //check if the user clicked on the icon using collisions
+            //creating a rectangle on the spot to i dont have to make a struct
             if (CheckCollisionRecs((Rectangle){guySlot1X, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 //run the items's func
                 test_obj_1_func();
 
                 //then delete from inventory
                 inventory_items.at(0) = 0;
+            }
+
+        break;
+    }
+    
+    //second inventory slot
+    switch(inventory_items.at(1)) {
+
+        //0 belongs to void, or nothing
+        case 0:
+
+        break;
+
+        //item 1 belongs to the test item
+        case 1:
+
+            DrawTexture(test_object_1, guySlot2X, guySlotY, WHITE);
+
+            //check if the user clicked on the icon using collisions
+            //creating a rectangle on the spot to i dont have to make a struct
+            if (CheckCollisionRecs((Rectangle){guySlot2X, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                //run the items's func
+                test_obj_1_func();
+
+                //then delete from inventory
+                inventory_items.at(1) = 0;
+            }
+
+        break;
+    }
+
+    //third inventory slot
+    switch(inventory_items.at(2)) {
+
+        //0 belongs to void, or nothing
+        case 0:
+
+        break;
+
+        //item 1 belongs to the test item
+        case 1:
+
+            DrawTexture(test_object_1, guySlot3X, guySlotY, WHITE);
+
+            //check if the user clicked on the icon using collisions
+            //creating a rectangle on the spot to i dont have to make a struct
+            if (CheckCollisionRecs((Rectangle){guySlot3X, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                //run the items's func
+                test_obj_1_func();
+
+                //then delete from inventory
+                inventory_items.at(2) = 0;
             }
 
         break;
