@@ -127,10 +127,10 @@ int main(void) {
                     //sfx
                     PlaySound(door_int);
 
-                    //set pos to the other door 
-                    //guyX = outside_door_from_home.x;
-                    //add door height so it doesnt spawn in door
-                    //guyY = outside_door_from_home.y + outside_door_from_home.sizeY;
+                    //make him eneter to the right of the door 
+                    guyX = market_exit.x + 110;
+
+                    guyY = market_exit.y;
 
                     //go to another room
                     room = 2;
@@ -140,7 +140,20 @@ int main(void) {
 
             //the supermarket
             case 2:
-                //for now, no interactable parts/ collision has been implemented
+
+                if (CheckCollisionRecs(guyHitbox, market_exit.hitbox) && IsKeyPressed(KEY_E)) {
+
+                    //sfx
+                    PlaySound(door_int);
+
+                    //set pos to the other door 
+                    guyX = outside_supermarket.x;
+                    //add door height so it doesnt spawn in door
+                    guyY = outside_supermarket.y + outside_supermarket.sizeY;
+
+                    //go to another room
+                    room = 1;
+                }
 
                 break;
 
@@ -208,6 +221,9 @@ int main(void) {
             case 2:
                 //background
                 DrawTexture(floortileshop, 0, 0, WHITE);
+
+                //draw the market exit
+                DrawTexture(market_exit.tex, market_exit.x, market_exit.y, WHITE);
 
                 break;
 
