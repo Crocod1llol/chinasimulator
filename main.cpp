@@ -31,6 +31,9 @@ int main(void) {
     InitWindow(screenWidth, screenHeight, "title test m"); 
     InitAudioDevice();
 
+	//disable exit key
+	SetExitKey(KEY_NULL);
+
     SetTargetFPS(60);//limita de frameuri 
                      
     //textures that i dont know where to put them so ill leave them in the main.cpp file cause yeah
