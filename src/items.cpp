@@ -4,7 +4,6 @@ extern "C" {
 
 #include "headers/general_parts.hpp"
 #include <vector>
-#include <stdio.h>
 
 //include player to manipulate values from it
 #include "headers/player.hpp"
@@ -74,81 +73,56 @@ void every_frame_func_items() {
     //jokes aside, yeah im checking in every slot to see what to render 
     //in what item spot and what action to do when clicked
     
-    //first inventory slot
-    switch(inventory_items.at(0)) {
+    //vars to help me in what slot should i put the item based on what slot it is iterating rn
+    //the y is the same for all of them
+    int slotX = 0;
 
-        //0 belongs to void, or nothing
-        case 0:
+    //iteratee over all slots
+    for (int i = 0; i < 3; i++) {
 
-        break;
+        //select slot pos based on what slot the loop is in
+        switch (i) {
+            //these macro vars are made in player.hpp
+            case 0:
+                slotX = guySlot1X;
 
-        //item 1 belongs to the test item
-        case 1:
+            break;
 
-            DrawTexture(test_object_1, guySlot1X, guySlotY, WHITE);
+            case 1:
+                slotX = guySlot2X;
 
-            //check if the user clicked on the icon using collisions
-            //creating a rectangle on the spot to i dont have to make a struct
-            if (CheckCollisionRecs((Rectangle){guySlot1X, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                //run the items's func
-                test_obj_1_func();
+            break;
 
-                //then delete from inventory
-                inventory_items.at(0) = 0;
-            }
+            case 2:
+                slotX = guySlot3X;
 
-        break;
+            break;
+        }
+
+        switch(inventory_items.at(i)) {
+
+            //0 belongs to void, or nothing
+            case 0:
+
+            break;
+
+            //item 1 belongs to the test item
+            case 1:
+
+                DrawTexture(test_object_1, slotX, guySlotY, WHITE);
+
+                //check if the user clicked on the icon using collisions
+                //creating a rectangle on the spot to i dont have to make a struct
+                if (CheckCollisionRecs((Rectangle){(float)slotX, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                    //run the items's func
+                    test_obj_1_func();
+
+                    //then delete from inventory
+                    inventory_items.at(i) = 0;
+                }
+
+            break;
+        }
     }
     
-    //second inventory slot
-    switch(inventory_items.at(1)) {
-
-        //0 belongs to void, or nothing
-        case 0:
-
-        break;
-
-        //item 1 belongs to the test item
-        case 1:
-
-            DrawTexture(test_object_1, guySlot2X, guySlotY, WHITE);
-
-            //check if the user clicked on the icon using collisions
-            //creating a rectangle on the spot to i dont have to make a struct
-            if (CheckCollisionRecs((Rectangle){guySlot2X, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                //run the items's func
-                test_obj_1_func();
-
-                //then delete from inventory
-                inventory_items.at(1) = 0;
-            }
-
-        break;
-    }
-
-    //third inventory slot
-    switch(inventory_items.at(2)) {
-
-        //0 belongs to void, or nothing
-        case 0:
-
-        break;
-
-        //item 1 belongs to the test item
-        case 1:
-
-            DrawTexture(test_object_1, guySlot3X, guySlotY, WHITE);
-
-            //check if the user clicked on the icon using collisions
-            //creating a rectangle on the spot to i dont have to make a struct
-            if (CheckCollisionRecs((Rectangle){guySlot3X, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                //run the items's func
-                test_obj_1_func();
-
-                //then delete from inventory
-                inventory_items.at(2) = 0;
-            }
-
-        break;
-    }
 }
