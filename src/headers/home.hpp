@@ -20,7 +20,6 @@ extern interact_part outside_door_from_home;
 
 //interactable items
 extern interact_part tester1;
-extern interact_part tester2;
 
 //funcs
 void init_home();
