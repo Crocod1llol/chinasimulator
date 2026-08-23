@@ -48,7 +48,7 @@ typedef struct container {
 
     bool isInteracted = false;
 
-    const int max_items;
+    int max_items;
 
     std::vector <int> container_item_ids;
 
