@@ -10,6 +10,7 @@ struct interact_part;
 //vectors
 extern std::vector<Part> home_parts;
 extern std::vector<interact_part*> home_int_parts;
+extern std::vector<container*> home_containers;
 extern std::vector<interact_part> home_doors;
 
 //declare items
@@ -19,7 +20,7 @@ extern std::vector<interact_part> home_doors;
 extern interact_part outside_door_from_home;
 
 //interactable items
-extern interact_part tester1;
+extern container tester1;
 
 //funcs
 void init_home();
