@@ -46,13 +46,13 @@ typedef struct container {
     float sizeX;
     float sizeY;
 
-    bool isInteracted = false;
-
     int max_items;
 
     std::vector <int> container_item_ids;
 
     Texture tex;
+
+    bool isInteracted = false;
 
     //the hitbox is larger so the player can interact with it without colliding directly into it
     Rectangle hitbox = {x, y, sizeX + 30, sizeY + 30};
