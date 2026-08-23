@@ -17,7 +17,7 @@ extern "C" {
 
 //var to keep track of the room
 //0 - home, 1 - outside home, 2 - supermarket, 
-int room = 0;
+unsigned int room = 0;
 
 //misc rectangles
 //they are placed here (in global) so all .cpp files can use it without getting linker errors
@@ -31,8 +31,8 @@ int main(void) {
     InitWindow(screenWidth, screenHeight, "title test m"); 
     InitAudioDevice();
 
-	//disable exit key
-	SetExitKey(KEY_NULL);
+    //disable exit key
+    SetExitKey(KEY_NULL);
 
     SetTargetFPS(60);//limita de frameuri 
                      
@@ -78,6 +78,22 @@ int main(void) {
                 //checks if player near object and he pressed "E"
                 //using address so it modifies the actual object, not a copy of it
                 for (auto i : home_int_parts) {
+                    
+                    //set var based on if its colliding hitboxes and E being held
+                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
+
+                        i->isInteracted = true;
+
+                    } else {
+
+                        i->isInteracted = false;
+                    }
+                }
+
+                //this is container
+                //checks if player near object and he pressed "E"
+                //using address so it modifies the actual object, not a copy of it
+                for (auto i : home_containers) {
                     
                     //set var based on if its colliding hitboxes and E being held
                     if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
@@ -192,12 +208,20 @@ int main(void) {
 
                      DrawTexture(i->tex, i->x, i->y, WHITE);
                 }
+
+                for (auto &i : home_containers) {
+
+                    DrawTexture(i->tex, i->x, i->y, WHITE);
+                }
         
                 //the "GUI" if you interacted with the cool object
                 if (tester1.isInteracted) {
 
 
                     DrawTexture(container_6_slots, screenWidth/2 - (300 / 2), screenHeight/2 - (300 / 2), WHITE);
+
+                    //draw all items in the container
+                    item_definer_6_slots(&tester1, (Vector2){393, 289}, (Vector2){487, 289}, (Vector2){569, 289}, (Vector2){396, 381}, (Vector2){487, 381}, (Vector2){567, 381});
                 }
 
                 break;
@@ -262,14 +286,14 @@ int main(void) {
 
         DrawText(TextFormat("Health: %d", guyHp), screenWidth - 210, 40, 20, RED);
         DrawText(TextFormat("Hunger: %d", guyHunger), screenWidth - 210, 65, 20, ORANGE);
-        DrawText(TextFormat("Cash�: %d", cash), screenWidth - 210, 90, 20, GREEN);
+        DrawText(TextFormat("Cash: %d", cash), screenWidth - 210, 90, 20, GREEN);
 
         //draw inv slots
         DrawTexture(inventorySlot, 25, 25, WHITE);
 
         //run items code that need to run every frame
         //ITS BEING RAN IN THE DRAWING SECTIONS BECAUSE IT ALSO DRAWS TEXTURES
-        every_frame_func_items();
+        every_frame_inv_func_items();
 
 
         //debug menu
