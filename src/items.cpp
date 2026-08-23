@@ -4,6 +4,7 @@ extern "C" {
 
 #include "headers/general_parts.hpp"
 #include <vector>
+#include <stdio.h>
 
 //include player to manipulate values from it
 #include "headers/player.hpp"
@@ -13,7 +14,7 @@ extern Rectangle mouseHitbox;
 
 //array that contains all possible item ids
 //check misc/all_item_ids.txt for all ids and respective object
-const int all_ids[] = {0, 1};
+const unsigned int all_ids[] = {0, 1};
 
 
 //other resources
@@ -23,19 +24,6 @@ Texture2D test_object_1;
 
 //sound
 Sound troll;
-
-/*
-  NOTICE: for now i have no plans to use this struct system since i will just be using item ids to choose 
-  what to draw, what function it will do, etc
-
-*/
-
-// a vector to keep track of the spawned items
-//std::vector <item*> spawned_items;
-
-//item structs
-//check the general_parts header for more info
-//item test_item;
 
 //load all item textures and init stuff
 void init_items() {
