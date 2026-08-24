@@ -49,6 +49,45 @@ void test_obj_1_func() {
     PlaySound(troll);
 }
 
+//variable that is responsible for transmitting the interacted slot
+//default value is 255
+int inv_slot_interacted = 255;
+
+//function to transfer an item from inv to a container
+void transfer_inv_to_cont(container *cont) {
+
+    //if the player is interacting with a cont AND the interacted slot's contents doesnt have an id of 0 AND if the var doesnt have the default value
+    if (inv_slot_interacted != 255 && inv_interact_state == 1 && inventory_items.at(inv_slot_interacted) != 0 ) {
+
+        //var to help keep the available empty spot
+        //255 is the default, aka if no spot is free
+        int available_spot = 255;
+
+        //find empty slot in contaainer
+        for (int i = 0; i < cont->max_items; i++) {
+
+            if (cont->container_item_ids.at(i) == 0) {
+
+                //if we found the desired slot, store in variable and get out of here
+                available_spot = i;
+                break;
+
+            }
+        }
+
+        //checking of all spots are taken
+        if (available_spot == 255) {
+
+            //if yes, then return nothing and exit func
+            return;
+        }
+        
+        //if all passed, then make the switch
+        cont->container_item_ids.at(available_spot) = inventory_items.at(inv_slot_interacted);
+        inventory_items.at(inv_slot_interacted) = 0;
+    }
+}
+
 //functions to help define item slots in *almost* any container
 //its still a help tho
 //notice: put this in the drawing part because it also attempts to draw on screen
@@ -125,6 +164,7 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
     }
 }
 
+
 //the function for itemsd that it needs to run every loop
 void every_frame_inv_func_items() {
 
@@ -161,6 +201,15 @@ void every_frame_inv_func_items() {
             break;
         }
 
+        //simplified var so that i dont have to write the spagetti to check if its been interacted
+        bool inv_interacted = CheckCollisionRecs((Rectangle){(float)slotX, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+
+        //if its interacted, then transmit the slot it has been interacted
+        if (inv_interacted) {
+            inv_slot_interacted = i;
+
+        }
+
         switch(inventory_items.at(i)) {
 
             //0 belongs to void, or nothing
@@ -173,15 +222,19 @@ void every_frame_inv_func_items() {
 
                 DrawTexture(test_object_1, slotX, guySlotY, WHITE);
 
-                //check if the user clicked on the icon using collisions
-                //creating a rectangle on the spot to i dont have to make a struct
-                if (CheckCollisionRecs((Rectangle){(float)slotX, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                //use only if the usage state is set to interact
+                if (inv_interact_state == 0 && inv_interacted) {
+                    
+                    //check if the user clicked on the icon using collisions
+                    //creating a rectangle on the spot to i dont have to make a struct
                     //run the items's func
                     test_obj_1_func();
 
                     //then delete from inventory
                     inventory_items.at(i) = 0;
+
                 }
+
 
             break;
 
@@ -194,3 +247,6 @@ void every_frame_inv_func_items() {
     }
     
 }
+
+
+
