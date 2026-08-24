@@ -34,6 +34,10 @@ extern Rectangle guyHitbox;
 //the vector that contains all item ids in inventory
 extern std::vector <size_t> inventory_items;
 
+//var to keep track of what state does the inventory interact do
+//0 - normal, click on item to do stuff
+//1 - container opened, clicking will direct to container
+extern int inv_interact_state;
 
 //all slot positions
 //the Y is the same, so yeah
