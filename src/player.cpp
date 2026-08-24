@@ -35,6 +35,11 @@ Rectangle guyHitbox;
 //the vector that contains all item ids in inventory
 std::vector <size_t> inventory_items = {1, 1, 1};
 
+//var to keep track of what state does the inventory interact do
+//0 - normal, click on item to do stuff
+//1 - container opened, clicking will direct to container
+int inv_interact_state = 0;
+
 //init variables and other stuff
 void init_player() {
 
