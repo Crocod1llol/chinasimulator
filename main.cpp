@@ -184,7 +184,7 @@ int main(void) {
         }
 
 
-        // Draw
+        // DRAWING !!!!!!!!!!!!!!!!!!!!1
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
@@ -220,13 +220,17 @@ int main(void) {
                     //make the interact state to 1 so that the item transfer works
                     inv_interact_state = 1;
 
-                    //oh and also run func that makes the item transfer possible when this is open
-                    transfer_inv_to_cont(&tester1);
 
                     DrawTexture(container_6_slots, screenWidth/2 - (300 / 2), screenHeight/2 - (300 / 2), WHITE);
 
                     //draw all items in the container
                     item_definer_6_slots(&tester1, (Vector2){393, 289}, (Vector2){487, 289}, (Vector2){569, 289}, (Vector2){396, 381}, (Vector2){487, 381}, (Vector2){567, 381});
+
+                    //oh and also run func that makes the item transfer to container possible when this is open
+                    transfer_inv_to_cont(&tester1);
+
+                    //and check for any transfers from container to inventory
+                    transfer_cont_to_inv(&tester1, (Vector2){393, 289}, (Vector2){487, 289}, (Vector2){569, 289}, (Vector2){396, 381}, (Vector2){487, 381}, (Vector2){567, 381});
                 } else {
                     //honestly its just so item transfer is not sticky
                     inv_interact_state = 0;
@@ -275,13 +279,6 @@ int main(void) {
 
 
         }
-
-
-        //draw all items.
-        //for (auto& i : spawned_items) {
-
-            //DrawTexture(i -> tex, i -> x, i -> y, WHITE);
-        //}
 
 
         //draw player here so he overlaps all
