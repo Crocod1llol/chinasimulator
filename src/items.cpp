@@ -53,6 +53,91 @@ void test_obj_1_func() {
 //default value is 255
 int inv_slot_interacted = 255;
 
+//func to help tranfer an item from a container to player inv
+//this detects collisions with my mouse, which helps in selecting which items to transfer
+void transfer_cont_to_inv(container *cont, Vector2 slot1, Vector2 slot2, Vector2 slot3, Vector2 slot4, Vector2 slot5, Vector2 slot6) {
+    
+    //vars to help me in what slot should i put the item based on what slot it is iterating rn
+    Rectangle current_slot_hitbox = {0, 0, 32, 32};
+    
+    //iterate over container storage
+    for (int i = 0; i < 6; i++) {
+
+        //select slot pos based on what slot is selected
+        switch (i) {
+            case 0:
+                current_slot_hitbox = {slot1.x, slot1.y, 32, 32};
+
+            break;
+
+            case 1:
+                current_slot_hitbox = {slot2.x, slot2.y, 32, 32};
+
+            break;
+
+            case 2:
+                current_slot_hitbox = {slot3.x, slot3.y, 32, 32};
+
+            break;
+
+            case 3:
+                current_slot_hitbox = {slot4.x, slot4.y, 32, 32};
+
+            break;
+
+            case 4:
+                current_slot_hitbox = {slot5.x, slot5.y, 32, 32};
+
+            break;
+
+            case 5:
+                current_slot_hitbox = {slot6.x, slot6.y, 32, 32};
+
+            break;
+
+            default:
+                printf("FATAL ERROR: invalid variable i with value %d, while being supposed to be 0-5", i);
+                exit(-1);
+
+            break;
+        }
+
+        //now check if a slot has been interacted and it has an item
+        if (cont->container_item_ids.at(i) != 0 && CheckCollisionRecs(current_slot_hitbox, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+
+            //variable to keep the first empty slot in player inv
+            //255 default value
+            int empty_slot = 255;
+
+            //now check for empty space in player inv
+            for (int a = 0; a < 3; a++) {
+
+                //if yes, then get da hell out of here
+                if (inventory_items.at(a) == 0) {
+                    empty_slot = a;
+
+                    break;
+                }
+            }
+
+            //check if there is any empty slot
+            if (empty_slot == 255) {
+                //then exit func
+                return;
+            }
+
+            //now make switch
+            inventory_items.at(empty_slot) = cont->container_item_ids.at(i);
+            cont->container_item_ids.at(i) = 0;
+        } 
+
+        /* also reset the last interacted slot to avoid bugs
+         * like not being able to place an item in the last spot in inv that was used to transer an item to container
+         * insane. */
+        inv_slot_interacted = 255;
+    }
+}
+
 //function to transfer an item from inv to a container
 void transfer_inv_to_cont(container *cont) {
 
@@ -95,6 +180,7 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
 
     //vars to help me in what slot should i put the item based on what slot it is iterating rn
     Vector2 current_slot_pos = {0, 0};
+    Rectangle current_slot_hitbox = {0, 0, 32, 32};
 
     for (int i = 0; i < 6; i++) {
 
@@ -102,31 +188,37 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
         switch (i) {
             case 0:
                 current_slot_pos = slot1;
+                current_slot_hitbox = {slot1.x, slot1.y, 32, 32};
 
             break;
 
             case 1:
                 current_slot_pos = slot2;
+                current_slot_hitbox = {slot2.x, slot2.y, 32, 32};
 
             break;
 
             case 2:
                 current_slot_pos = slot3;
+                current_slot_hitbox = {slot3.x, slot3.y, 32, 32};
 
             break;
 
             case 3:
                 current_slot_pos = slot4;
+                current_slot_hitbox = {slot4.x, slot4.y, 32, 32};
 
             break;
 
             case 4:
                 current_slot_pos = slot5;
+                current_slot_hitbox = {slot5.x, slot5.y, 32, 32};
 
             break;
 
             case 5:
                 current_slot_pos = slot6;
+                current_slot_hitbox = {slot6.x, slot6.y, 32, 32};
 
             break;
 
@@ -247,6 +339,3 @@ void every_frame_inv_func_items() {
     }
     
 }
-
-
-
