@@ -31,6 +31,7 @@ void init_items();
 void every_frame_inv_func_items();
 
 void transfer_inv_to_cont(container *cont);
+void transfer_cont_to_inv(container *cont, Vector2 slot1, Vector2 slot2, Vector2 slot3, Vector2 slot4, Vector2 slot5, Vector2 slot6);
 
 void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2 slot3, Vector2 slot4, Vector2 slot5, Vector2 slot6);
 
