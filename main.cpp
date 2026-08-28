@@ -51,6 +51,7 @@ int main(void) {
     init_outside_home();
     initshop();
     
+    //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
 
     // Main game loop
@@ -285,6 +286,9 @@ int main(void) {
 
                 //draw door since its not in the interact_parts vector
                 DrawTexture(market_exit.tex, market_exit.x, market_exit.y, WHITE);
+
+                    //draw chat bubble texture on cashier
+                    DrawTexture(chat_bubble, cashier.x - 100, cashier.y - 75, WHITE);
 
                 //int_parts
                 for (auto i : shop_int_parts) {
