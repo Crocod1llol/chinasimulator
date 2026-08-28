@@ -42,7 +42,6 @@ int main(void) {
     //sfx
     Sound door_int = LoadSound("resources/sfx/door_int.ogg");
 
-
 	//init
     init_player();
     init_items();
@@ -51,10 +50,11 @@ int main(void) {
     init_home();
     init_outside_home();
     initshop();
+    
+    PlayMusicStream(shop_theme);
 
     // Main game loop
     while (!WindowShouldClose()) {
-
         //update mouse hitbox with new vars 
         mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
 
@@ -73,7 +73,6 @@ int main(void) {
 
             //home
             case 0:
-
 
                 //checks if player near object and he pressed "E"
                 //using address so it modifies the actual object, not a copy of it
@@ -160,7 +159,8 @@ int main(void) {
             //the supermarket
             case 2:
 
-                if (CheckCollisionRecs(guyHitbox, market_exit.hitbox) && IsKeyPressed(KEY_E)) {
+                //check if the exit door in shop has been interacted
+                if (CheckCollisionRecs(market_exit.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
 
                     //sfx
                     PlaySound(door_int);
@@ -172,6 +172,21 @@ int main(void) {
 
                     //go to another room
                     room = 1;
+                }
+
+                //checks if player near object and he pressed "E"
+                //using address so it modifies the actual object, not a copy of it
+                for (auto i : shop_int_parts) {
+                    
+                    //set var based on if its colliding hitboxes and E being held
+                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
+
+                        i->isInteracted = true;
+
+                    } else {
+
+                        i->isInteracted = false;
+                    }
                 }
 
                 break;
@@ -262,11 +277,20 @@ int main(void) {
                 
             //the supermarket
             case 2:
+                //play the track
+                UpdateMusicStream(shop_theme);
+
                 //background
                 DrawTexture(floortileshop, 0, 0, WHITE);
 
-                //draw the market exit
+                //draw door since its not in the interact_parts vector
                 DrawTexture(market_exit.tex, market_exit.x, market_exit.y, WHITE);
+
+                //int_parts
+                for (auto i : shop_int_parts) {
+
+                    DrawTexture(i->tex, i->x, i->y, WHITE);
+                }
 
                 break;
 
