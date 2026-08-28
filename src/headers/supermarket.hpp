@@ -11,6 +11,14 @@ extern Texture2D floortileshop;
 //any created structs
 extern interact_part market_exit;
 
+extern interact_part cashier;
+
+//the shop theme
+extern Music shop_theme;
+
+//vectors
+extern std::vector <interact_part*> shop_int_parts;
+
 //funcs
 void initshop();
 
