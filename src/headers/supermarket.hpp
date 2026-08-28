@@ -13,6 +13,12 @@ extern interact_part market_exit;
 
 extern interact_part cashier;
 
+//cashier chat bubble
+extern Texture2D chat_bubble;
+
+//the cashier's text lines
+extern const char *greetings[3];
+
 //the shop theme
 extern Music shop_theme;
 
