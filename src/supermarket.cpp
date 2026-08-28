@@ -6,6 +6,7 @@ extern "C" {
 #include <vector>
 
 #include "headers/general_parts.hpp"
+#include <stdio.h>
 
 //the background
 Texture2D floortileshop;
@@ -14,6 +15,14 @@ Texture2D floortileshop;
 interact_part market_exit;
 
 interact_part cashier;
+
+//cashier chat bubble
+Texture2D chat_bubble;
+
+//the cashier text lines
+const char *greetings[] = {"Welcome to china shop!", "Hello!", "hi bro whacha doin"};
+
+
 
 //the shop theme
 Music shop_theme;
@@ -29,6 +38,9 @@ void initshop()
 
     //background
 	floortileshop = LoadTexture("resources/img/textures/storebg1000x800.png");
+
+    //cashier chat bubbl
+    chat_bubble = LoadTexture("resources/img/other/chat_bubble.png");
 
     //any created structs
     
