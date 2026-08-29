@@ -14,6 +14,30 @@ extern "C" {
 #include "src/headers/items.hpp"
 #include "src/headers/supermarket.hpp"
 
+//timer struct to make a timer
+//example of a Timer struct
+// Timer cool_timer = {2.0};
+typedef struct Timer {
+
+    const double lifetime;
+
+    //make start_time automatically begin with the GetTime
+    const double start_time = GetTime();
+} Timer;
+
+
+bool isTimerDone(Timer* timer) {
+
+    //if enough time has passed to go over the lifetime
+    if (GetTime() - timer->start_time >= timer->lifetime) {
+
+        return true;
+    } else {
+
+        return false;
+    }
+}
+
 
 //var to keep track of the room
 //0 - home, 1 - outside home, 2 - supermarket, 
@@ -53,6 +77,7 @@ int main(void) {
     
     //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
+
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -284,11 +309,16 @@ int main(void) {
                 //background
                 DrawTexture(floortileshop, 0, 0, WHITE);
 
+                //create a timer for the chat bubble
+                //Timer bubble_timer = {2.0};
+
                 //draw door since its not in the interact_parts vector
                 DrawTexture(market_exit.tex, market_exit.x, market_exit.y, WHITE);
 
+                //if (!isTimerDone(&bubble_timer)) {
                     //draw chat bubble texture on cashier
                     DrawTexture(chat_bubble, cashier.x - 100, cashier.y - 75, WHITE);
+                //}
 
                 //int_parts
                 for (auto i : shop_int_parts) {
@@ -303,7 +333,6 @@ int main(void) {
                 std::cout << "switch_case_draw: game is sad, room var is modified \n";
                 return -1;
                 break;
-
 
 
         }
