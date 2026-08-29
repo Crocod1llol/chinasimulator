@@ -25,18 +25,24 @@ const unsigned int all_ids[] = {0, 1};
 
 Texture2D test_object_1;
 
+Texture2D burger_2;
+
 //sound
 Sound troll;
+
+Sound eat;
 
 //load all item textures and init stuff
 void init_items() {
     //init textures
     test_object_1 = LoadTexture("resources/img/textures/items/1_test_obj.png");
 
+    burger_2 = LoadTexture("resources/img/textures/items/2_burger.png");
 
     //init sounds
     troll = LoadSound("resources/sfx/items/troll.ogg");
 
+    eat = LoadSound("resources/sfx/items/eat.ogg");
 }
 
 //ALL ITEM EXECUTION FUNCTIONS
@@ -47,6 +53,14 @@ void test_obj_1_func() {
     
     //play a sound
     PlaySound(troll);
+}
+
+void burger_2_func() {
+
+    //feed the guy
+    guyHunger = guyHunger + 35;
+
+    PlaySound(eat);
 }
 
 //variable that is responsible for transmitting the interacted slot
@@ -242,7 +256,11 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
             case 1:
                 DrawTexture(test_object_1, current_slot_pos.x, current_slot_pos.y, WHITE);
                 
+            break;
 
+            case 2:
+
+                DrawTexture(burger_2, current_slot_pos.x, current_slot_pos.y, WHITE);
             break;
 
             //if something goes wrong
@@ -317,8 +335,6 @@ void every_frame_inv_func_items() {
                 //use only if the usage state is set to interact
                 if (inv_interact_state == 0 && inv_interacted) {
                     
-                    //check if the user clicked on the icon using collisions
-                    //creating a rectangle on the spot to i dont have to make a struct
                     //run the items's func
                     test_obj_1_func();
 
@@ -327,7 +343,21 @@ void every_frame_inv_func_items() {
 
                 }
 
+            break;
 
+            //burger
+            case 2:
+                DrawTexture(burger_2, slotX, guySlotY, WHITE);
+
+                //use only if the usage state is set to interact
+                if (inv_interact_state == 0 && inv_interacted) {
+
+                    //run items's
+                    burger_2_func();
+
+                    //then del from inv
+                    inventory_items.at(i) = 0;
+                }
             break;
 
             default:
