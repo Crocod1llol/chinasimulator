@@ -5,6 +5,9 @@ extern "C" {
 
 #include <vector>
 
+//the maximum hunger and hp is 100
+#define MAX_HUMANOID_STATS 100
+
 //all textures
 Texture2D guyTex;
 
@@ -14,7 +17,7 @@ Texture2D inventorySlot;
 
 //all player's stats
 int guyHp = 100;
-int guyHunger = 100;
+int guyHunger = 2;
 int cash = 100;
 int card = 0;
 
@@ -40,6 +43,9 @@ std::vector <size_t> inventory_items = {2, 2, 1};
 //1 - container opened, clicking will direct to container
 int inv_interact_state = 0;
 
+//sounds
+Sound death;
+
 //init variables and other stuff
 void init_player() {
 
@@ -52,10 +58,35 @@ void init_player() {
     guyX = GetRenderWidth()/2;
     guyY = GetRenderWidth()/2;
 
+    //sound
+    death = LoadSound("resources/sfx/death.ogg");
 }
 
 //code that needs to run every frame for the player
 void every_frame_player() {
+
+    //if player died
+    if (guyHp <= 0) {
+
+        PlaySound(death);
+    }
+
+    //check if player doesnt have hunger anymore
+    if (guyHunger <= 0) {
+
+        //kill.
+        guyHp = 0;
+    }
+
+    //check if hunger or health surpassed the limit
+    if (guyHunger >= MAX_HUMANOID_STATS) {
+
+        guyHunger = MAX_HUMANOID_STATS;
+    }
+    if (guyHp >= MAX_HUMANOID_STATS) {
+        
+        guyHp = MAX_HUMANOID_STATS;
+    }
 
     //PLAYER MOVEMENT -------------------------
 
