@@ -1,4 +1,5 @@
 NOTICE: item textures must be 32x32
 
 0 - nothing, a specifier for that it isnt an item
-1 - test object, it just plays a fart sound
+1 - test object, it just plays a interesting sound
+2 - a burger, adds 35 to player's hunger
