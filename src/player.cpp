@@ -33,7 +33,7 @@ int playerspeed = 5;
 Rectangle guyHitbox;
 
 //the vector that contains all item ids in inventory
-std::vector <size_t> inventory_items = {1, 1, 1};
+std::vector <size_t> inventory_items = {2, 2, 1};
 
 //var to keep track of what state does the inventory interact do
 //0 - normal, click on item to do stuff
