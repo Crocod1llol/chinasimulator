@@ -14,15 +14,16 @@ extern "C" {
 #include "src/headers/items.hpp"
 #include "src/headers/supermarket.hpp"
 
+
 //timer struct to make a timer
 //example of a Timer struct
 // Timer cool_timer = {2.0};
 typedef struct Timer {
 
-    const double lifetime;
+    double lifetime;
 
     //make start_time automatically begin with the GetTime
-    const double start_time = GetTime();
+    double start_time = GetTime();
 } Timer;
 
 
@@ -78,6 +79,8 @@ int main(void) {
     //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
 
+    //initiate a timer for hunger
+    Timer hunger_timer = {8.0};
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -91,6 +94,17 @@ int main(void) {
         
         //run player, movement, actions every frame
         every_frame_player();
+
+        //check if 8 secs have passed to remove 1 point of hunger
+        if (isTimerDone(&hunger_timer)) {
+
+            if (guyHunger > 0) {
+                guyHunger = guyHunger - 1;
+            }
+
+            //reset the timer
+            hunger_timer.start_time = GetTime();
+        }
 
         //MAP OBEJCTS -----------------------------------------------------------------------
         
@@ -338,8 +352,14 @@ int main(void) {
         }
 
 
-        //draw player here so he overlaps all
-        DrawTexture(guyTex, guyX, guyY, WHITE);
+        //draw player here so he overlaps all (if hes alive)
+        if (guyHp > 0) {
+            DrawTexture(guyTex, guyX, guyY, WHITE);
+        } else {
+
+            //sub the font size so its centered
+            DrawText("You died.", screenWidth/2 - 118, screenHeight/2 - 60, 60, MAROON);
+        }
 
         //the stat "menu"
         //temp: it is only the text of the stats, ill want it to be some sort of a bar or smth
