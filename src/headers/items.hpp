@@ -15,9 +15,13 @@ extern const int all_ids[];
 
 extern Texture2D test_object_1;
 
+extern Texture2D burger_2;
+
 //all sounds
 
 extern Sound troll;
+
+extern Sound eat;
 
 //any eventual variables:
 
