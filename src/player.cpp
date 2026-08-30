@@ -8,6 +8,9 @@ extern "C" {
 //the maximum hunger and hp is 100
 #define MAX_HUMANOID_STATS 100
 
+//extern the room var since its from main and player respawns in home
+extern unsigned int room;
+
 //all textures
 Texture2D guyTex;
 
@@ -17,7 +20,7 @@ Texture2D inventorySlot;
 
 //all player's stats
 int guyHp = 100;
-int guyHunger = 2;
+int guyHunger = 1;
 int cash = 100;
 int card = 0;
 
@@ -56,19 +59,54 @@ void init_player() {
 
     //init vars
     guyX = GetRenderWidth()/2;
-    guyY = GetRenderWidth()/2;
+    guyY = GetRenderHeight()/2;
 
     //sound
     death = LoadSound("resources/sfx/death.ogg");
 }
+
+//variable to play the death sound once
+bool soundCount = true;
+
+//a func that resets the player state to the default values after they died
+void resetPlayer() {
+
+    PlaySound(death);
+
+    guyHp = 50;
+    guyHunger = 86;
+
+    guyX = GetRenderWidth()/2;
+    guyY = GetRenderHeight()/2;
+
+    room = 0;
+    
+    soundCount = true;
+}
+
 
 //code that needs to run every frame for the player
 void every_frame_player() {
 
     //if player died
     if (guyHp <= 0) {
+    
+    	//also drop all player items if they died
+    	for (unsigned int i = 0; i < inventory_items.size(); i++) {
+    		inventory_items.at(i) = 0;
+    	}
 
-        PlaySound(death);
+		//i use this variable so that the sfx doesnt repeat forever while dead
+		if (soundCount) {
+			PlaySound(death);
+			
+			soundCount = false;
+		}
+
+        //reset player if key T is pressed
+    	if (IsKeyPressed(KEY_T)) {
+    		resetPlayer();
+    	}
     }
 
     //check if player doesnt have hunger anymore
@@ -87,6 +125,8 @@ void every_frame_player() {
         
         guyHp = MAX_HUMANOID_STATS;
     }
+    
+
 
     //PLAYER MOVEMENT -------------------------
 
