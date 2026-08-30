@@ -39,7 +39,6 @@ bool isTimerDone(Timer* timer) {
     }
 }
 
-
 //var to keep track of the room
 //0 - home, 1 - outside home, 2 - supermarket, 
 unsigned int room = 0;
@@ -359,6 +358,7 @@ int main(void) {
 
             //sub the font size so its centered
             DrawText("You died.", screenWidth/2 - 118, screenHeight/2 - 60, 60, MAROON);
+			DrawText("Press T to respawn.", screenWidth/2 - 140, screenHeight/2, 30, MAROON);
         }
 
         //the stat "menu"
