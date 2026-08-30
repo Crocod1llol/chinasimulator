@@ -51,6 +51,8 @@ extern int inv_interact_state;
 //functions
 void init_player();
 
+void resetPlayer();
+
 void every_frame_player();
 
 
