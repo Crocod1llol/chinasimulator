@@ -330,7 +330,7 @@ int main(void) {
 
                 //if (!isTimerDone(&bubble_timer)) {
                     //draw chat bubble texture on cashier
-                    DrawTexture(chat_bubble, cashier.x - 100, cashier.y - 75, WHITE);
+                    DrawTexture(chat_bubble, cashier.x - 387, cashier.y - 165, WHITE);
                 //}
 
                 //int_parts
