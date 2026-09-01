@@ -19,6 +19,9 @@ extern Texture2D chat_bubble;
 //the cashier's text lines
 extern const char *greetings[3];
 
+//a variable to keep track of what greeting should be displayed next
+extern char selected_greeting[100];
+
 //the shop theme
 extern Music shop_theme;
 
