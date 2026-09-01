@@ -71,8 +71,6 @@ bool soundCount = true;
 //a func that resets the player state to the default values after they died
 void resetPlayer() {
 
-    PlaySound(death);
-
     guyHp = 50;
     guyHunger = 86;
 
