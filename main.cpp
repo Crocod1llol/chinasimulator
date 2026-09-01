@@ -4,6 +4,7 @@ extern "C" {
 }
 
 #include <iostream>
+#include <string.h>
 
 //own headers
 #include "src/headers/player.hpp"
@@ -14,6 +15,9 @@ extern "C" {
 #include "src/headers/items.hpp"
 #include "src/headers/supermarket.hpp"
 
+//the seed that the program will use
+//it may or may not be changed to anything you wish >:)
+#define seed time(0)
 
 //timer struct to make a timer
 //example of a Timer struct
@@ -39,9 +43,10 @@ bool isTimerDone(Timer* timer) {
     }
 }
 
+
 //var to keep track of the room
 //0 - home, 1 - outside home, 2 - supermarket, 
-unsigned int room = 0;
+unsigned short int room = 0;
 
 //misc rectangles
 //they are placed here (in global) so all .cpp files can use it without getting linker errors
@@ -66,6 +71,11 @@ int main(void) {
     //sfx
     Sound door_int = LoadSound("resources/sfx/door_int.ogg");
 
+    //misc vars
+    
+    //var so that the random greeting doesnt reset mid convo
+    bool write_enable_random_greeting = true;
+
 	//init
     init_player();
     init_items();
@@ -78,11 +88,23 @@ int main(void) {
     //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
 
+    //al timers get created here so that the start time doesnt reset
+
     //initiate a timer for hunger
     Timer hunger_timer = {8.0};
 
+    //the chat bubble timer
+    Timer bubble_timer = {3.0};
+    //also a var so that the bubble timer keeps its start time and doesnt change
+    bool write_enable_bubble_timer = true;
+
+
     // Main game loop
     while (!WindowShouldClose()) {
+
+        //randomize the seed everytime
+        srand(seed);
+
         //update mouse hitbox with new vars 
         mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
 
@@ -252,18 +274,18 @@ int main(void) {
             case 0:
 
                 //draw all doors
-                for (auto& i : home_doors) {
+                for (auto i : home_doors) {
 
                      DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
             
                 //draw all interactable parts
-                for (auto &i : home_int_parts) {
+                for (auto i : home_int_parts) {
 
                      DrawTexture(i->tex, i->x, i->y, WHITE);
                 }
 
-                for (auto &i : home_containers) {
+                for (auto i : home_containers) {
 
                     DrawTexture(i->tex, i->x, i->y, WHITE);
                 }
@@ -311,27 +333,58 @@ int main(void) {
 
                     DrawTexture(i -> tex, i -> x, i -> y, WHITE);
                 }
+
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
+                //oh yeah and about supermarket, when leaving, you go outside, but the cashier needs
+                //to greet everytime yyou enter, so allow the chat bubble to appear
+                write_enable_bubble_timer = true;
+
+                //same with the random greeting
+                write_enable_random_greeting = true;
                 break;
                 
             //the supermarket
-            case 2:
+            //btw we use {} to make a scope so the compiler doesnt complain about
+            //a variable declared here to fall through another case
+            case 2: {
+
+                //grab the rng value
+                const unsigned int rng = rand();
+
+                if (write_enable_random_greeting) {
+                    //now copy the random greeting
+                    strncpy(selected_greeting, greetings[rng % 3], 100);
+
+                    write_enable_random_greeting = false;
+                }
+
                 //play the track
                 UpdateMusicStream(shop_theme);
 
                 //background
                 DrawTexture(floortileshop, 0, 0, WHITE);
 
-                //create a timer for the chat bubble
-                //Timer bubble_timer = {2.0};
-
                 //draw door since its not in the interact_parts vector
                 DrawTexture(market_exit.tex, market_exit.x, market_exit.y, WHITE);
 
-                //if (!isTimerDone(&bubble_timer)) {
+                //set start time to timer so it works
+                if (write_enable_bubble_timer) {
+
+                    bubble_timer.start_time = GetTime();
+
+                    write_enable_bubble_timer = false;
+                }
+
+                //check if the timer didnt expire
+                if (!isTimerDone(&bubble_timer)) {
                     //draw chat bubble texture on cashier
                     DrawTexture(chat_bubble, cashier.x - 387, cashier.y - 165, WHITE);
-                //}
+
+                    //draw text
+                    DrawText(selected_greeting, cashier.x - 360, cashier.y - 155, 25, BLACK);
+
+
+                }
 
                 //int_parts
                 for (auto i : shop_int_parts) {
@@ -340,6 +393,7 @@ int main(void) {
                 }
 
                 break;
+            }
 
             //if it somehow goes wrong
             default:
