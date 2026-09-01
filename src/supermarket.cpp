@@ -22,6 +22,8 @@ Texture2D chat_bubble;
 //the cashier text lines
 const char *greetings[] = {"Welcome to china shop!", "Hello!", "hi bro whacha doin"};
 
+//a variable to keep track of what greeting should be displayed next
+char selected_greeting[100];
 
 
 //the shop theme
