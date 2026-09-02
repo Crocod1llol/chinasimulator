@@ -1,4 +1,4 @@
-//this file houses the logic behind the player, the initialization of other files and logic of objects and stats
+//this file has the initialization of other files and logic of objects and stats
 extern "C" {
     #include "lib/raylib.h"
 }
@@ -259,7 +259,6 @@ int main(void) {
 
         }
 
-
         // DRAWING !!!!!!!!!!!!!!!!!!!!1
         //----------------------------------------------------------------------------------
         BeginDrawing();
@@ -353,9 +352,17 @@ int main(void) {
 
                 if (write_enable_random_greeting) {
                     //now copy the random greeting
-                    strncpy(selected_greeting, greetings[rng % 3], 100);
+                    strncpy(selected_line, greetings[rng % 3], 100);
 
                     write_enable_random_greeting = false;
+                }
+
+                //set start time to timer so it works
+                if (write_enable_bubble_timer) {
+
+                    bubble_timer.start_time = GetTime();
+
+                    write_enable_bubble_timer = false;
                 }
 
                 //play the track
@@ -367,12 +374,12 @@ int main(void) {
                 //draw door since its not in the interact_parts vector
                 DrawTexture(market_exit.tex, market_exit.x, market_exit.y, WHITE);
 
-                //set start time to timer so it works
-                if (write_enable_bubble_timer) {
+                //make the cashier say a random line from interactions 
+                if (cashier.isInteracted) {
+                    strncpy(selected_line, interaction_lines[rng % 5], 100);
 
-                    bubble_timer.start_time = GetTime();
-
-                    write_enable_bubble_timer = false;
+                    //and activate bubble timer
+                    write_enable_bubble_timer = true;
                 }
 
                 //check if the timer didnt expire
@@ -381,9 +388,7 @@ int main(void) {
                     DrawTexture(chat_bubble, cashier.x - 387, cashier.y - 165, WHITE);
 
                     //draw text
-                    DrawText(selected_greeting, cashier.x - 360, cashier.y - 155, 25, BLACK);
-
-
+                    DrawText(selected_line, cashier.x - 365, cashier.y - 155, 25, BLACK);
                 }
 
                 //int_parts
