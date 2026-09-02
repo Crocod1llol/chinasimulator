@@ -1,9 +1,10 @@
+#include <vector>
+
 #ifndef SUPERMARKET_HPP
 #define SUPERMARKET_HPP
 
 //tell header that structs are declared somewhere else
 struct interact_part;
-
 
 //the background
 extern Texture2D floortileshop;
@@ -19,8 +20,10 @@ extern Texture2D chat_bubble;
 //the cashier's text lines
 extern const char *greetings[3];
 
+extern const char *interaction_lines[5];
+
 //a variable to keep track of what greeting should be displayed next
-extern char selected_greeting[100];
+extern char selected_line[100];
 
 //the shop theme
 extern Music shop_theme;
