@@ -6,7 +6,7 @@ extern "C" {
 #include <vector>
 
 #include "headers/general_parts.hpp"
-#include <stdio.h>
+//#include <stdio.h>
 
 //the background
 Texture2D floortileshop;
@@ -21,9 +21,11 @@ Texture2D chat_bubble;
 
 //the cashier text lines
 const char *greetings[] = {"Welcome to china shop!", "Hello!", "hi bro whacha doin"};
+const char *interaction_lines[] = {"What is it?", "what do you need bro", "hey buddy.", "whats wrong?", "no, i don't give free candy"};
+
 
 //a variable to keep track of what greeting should be displayed next
-char selected_greeting[100];
+char selected_line[100];
 
 
 //the shop theme
