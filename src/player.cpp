@@ -20,7 +20,7 @@ Texture2D inventorySlot;
 
 //all player's stats
 int guyHp = 100;
-int guyHunger = 1;
+int guyHunger = 85;
 int cash = 100;
 int card = 0;
 
