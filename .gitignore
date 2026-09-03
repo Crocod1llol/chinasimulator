@@ -1,7 +1,12 @@
 #that folder is just my planning, its not going to get pushed
-misc/
+misc/*
 
 #ignore stuff that is linux only
-lib/
+lib/*
 compile.sh
 game
+
+#ignore unnecesary stuff
+todo.txt 
+thumbnail.png
+README.md
