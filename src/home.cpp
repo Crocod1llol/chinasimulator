@@ -17,10 +17,10 @@ std::vector<Part> home_parts;
 std::vector<interact_part> home_doors;
 
 //doors will be their own object since they go to different rooms
-interact_part outside_door_from_home;
+interact_part outside_door_from_home = {};
 
 //separate interact items
-container tester1;
+container tester1 = {};
 
 void init_home() {
 

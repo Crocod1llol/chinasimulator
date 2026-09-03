@@ -6,6 +6,7 @@
 //extern structs so we can use them here
 struct Part;
 struct interact_part;
+struct container;
 
 //vectors
 extern std::vector<Part> home_parts;

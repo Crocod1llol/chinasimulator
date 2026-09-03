@@ -1,0 +1,7 @@
+#that folder is just my planning, its not going to get pushed
+misc/
+
+#ignore stuff that is linux only
+lib/
+compile.sh
+game

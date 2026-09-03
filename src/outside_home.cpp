@@ -12,15 +12,16 @@ Texture outside_home_grass;
 
 //declaration
 //vectors
-std::vector <Part> outside_home_parts;
 std::vector <interact_part*> outside_exits;
+std::vector <Part> outside_home_parts;
 
 //parts
-Part maybe_flowers;
+Part maybe_flowers = {};
 
 //doors/gateways
-interact_part outside_door_to_home;
-interact_part outside_supermarket;
+interact_part outside_door_to_home = {};
+interact_part outside_supermarket = {};
+
 
 void init_outside_home() {
     //the outside grass
@@ -36,7 +37,7 @@ void init_outside_home() {
 
 
     //inserting into vectors
-    //parts vector
+    //part vector
     outside_home_parts.push_back(maybe_flowers);
 
     //exists vector
