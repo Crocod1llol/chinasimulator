@@ -4,8 +4,6 @@
 #ifndef GENERAL_PARTS_HPP
 #define GENERAL_PARTS_HPP
 
-struct Texture;
-struct Rectangle;
 
 typedef struct Part {
 

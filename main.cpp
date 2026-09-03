@@ -8,6 +8,7 @@ extern "C" {
 
 //own headers
 #include "src/headers/player.hpp"
+
 #include "src/headers/general_parts.hpp"
 #include "src/headers/home.hpp"
 #include "src/headers/outside_home.hpp"
@@ -249,21 +250,6 @@ int main(void) {
                     }
                 }
 
-                //checks if player near object and he pressed "E"
-                //using address so it modifies the actual object, not a copy of it
-                for (auto i : shop_own_containers) {
-                    
-                    //set var based on if its colliding hitboxes and E being held
-                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
-
-                        i->isInteracted = true;
-
-                    } else {
-
-                        i->isInteracted = false;
-                    }
-                }
-
                 break;
 
             //if something somehow goes wrong
@@ -366,7 +352,7 @@ int main(void) {
 
                 if (write_enable_random_greeting) {
                     //now copy the random greeting
-                    strncpy(selected_line_1, greetings[rng % 3], 100);
+                    strncpy(selected_line, greetings[rng % 3], 100);
 
                     write_enable_random_greeting = false;
                 }
@@ -390,7 +376,7 @@ int main(void) {
 
                 //make the cashier say a random line from interactions 
                 if (cashier.isInteracted) {
-                    strncpy(selected_line_1, interaction_lines[rng % 5], 100);
+                    strncpy(selected_line, interaction_lines[rng % 5], 100);
 
                     //and activate bubble timer
                     write_enable_bubble_timer = true;
@@ -399,19 +385,14 @@ int main(void) {
                 //check if the timer didnt expire
                 if (!isTimerDone(&bubble_timer)) {
                     //draw chat bubble texture on cashier
-                    DrawTexture(chat_bubble, cashier.x - 200, cashier.y + 135, WHITE);
+                    DrawTexture(chat_bubble, cashier.x - 387, cashier.y - 165, WHITE);
 
                     //draw text
-                    DrawText(selected_line_1, cashier.x - 180, cashier.y + 160, 25, BLACK);
+                    DrawText(selected_line, cashier.x - 365, cashier.y - 155, 25, BLACK);
                 }
 
                 //int_parts
                 for (auto i : shop_int_parts) {
-
-                    DrawTexture(i->tex, i->x, i->y, WHITE);
-                }
-
-                for (auto i : shop_own_containers) {
 
                     DrawTexture(i->tex, i->x, i->y, WHITE);
                 }
