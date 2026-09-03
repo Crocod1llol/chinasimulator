@@ -58,8 +58,8 @@ void init_player() {
     inventorySlot = LoadTexture("resources/img/other/inventory_slot.png");
 
     //init vars
-    guyX = GetRenderWidth()/2;
-    guyY = GetRenderHeight()/2;
+    guyX = GetRenderWidth()/2.0;
+    guyY = GetRenderHeight()/2.0;
 
     //sound
     death = LoadSound("resources/sfx/death.ogg");
@@ -74,8 +74,8 @@ void resetPlayer() {
     guyHp = 50;
     guyHunger = 86;
 
-    guyX = GetRenderWidth()/2;
-    guyY = GetRenderHeight()/2;
+    guyX = GetRenderWidth()/2.0;
+    guyY = GetRenderHeight()/2.0;
 
     room = 0;
     
