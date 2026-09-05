@@ -101,7 +101,7 @@ void initshop()
 
 //define a macro so that i wont be writing 15 lines everytime i 
 //want to buy the item
-#define buy_item()                                                   \
+#define try_buy_item()                                                   \
 do {                                                             \
     if (interacted && cash >= cont->container_contents.at(i).price) { \
         for (int a = 0; a < 3; ++a) {                            \
@@ -178,14 +178,14 @@ void shop_container_definer(shop_container *cont, Vector2 slot1, Vector2 slot2, 
             case 1:
                 DrawTexture(test_object_1, current_slot_hitbox.x, current_slot_hitbox.y, WHITE);
 
-                buy_item();
+                try_buy_item();
             break;
 
             case 2:
 
                 DrawTexture(burger_2, current_slot_hitbox.x, current_slot_hitbox.y, WHITE);
 
-                buy_item();
+                try_buy_item();
             break;
 
             //if something goes wrong
