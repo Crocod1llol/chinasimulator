@@ -416,6 +416,23 @@ int main(void) {
                     DrawTexture(i->tex, i->x, i->y, WHITE);
                 }
 
+                //the "GUI" if you interacted with the vending machine
+                if (vending_machine.isInteracted) {
+
+                    //make the interact state to 1 so that the item transfer works
+                    inv_interact_state = 1;
+
+
+                    DrawTexture(container_6_slots, screenWidth/2 - (300 / 2), screenHeight/2 - (300 / 2), WHITE);
+
+                    //draw all items in the container
+                    shop_container_definer(&vending_machine, (Vector2){393, 289}, (Vector2){487, 289}, (Vector2){569, 289}, (Vector2){396, 381}, (Vector2){487, 381}, (Vector2){567, 381});
+
+                } else {
+                    //make sure it doesnt stick
+                    inv_interact_state = 0;
+                }
+
                 break;
             }
 
