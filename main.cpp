@@ -286,13 +286,12 @@ int main(void) {
             //this is all part of room 0, aka home
             case 0:
 
-                //draw all doors
+                //draw everything from stuct vectors
                 for (auto i : home_doors) {
 
                      DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
             
-                //draw all interactable parts
                 for (auto i : home_int_parts) {
 
                      DrawTexture(i->tex, i->x, i->y, WHITE);
@@ -301,6 +300,11 @@ int main(void) {
                 for (auto i : home_containers) {
 
                     DrawTexture(i->tex, i->x, i->y, WHITE);
+                }
+
+                for (auto i : home_parts) {
+
+                    DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
         
                 //the "GUI" if you interacted with the cool object
