@@ -1,9 +1,0 @@
-[x] make a test interactable object 
-[x] make a separate room (being accesible by interacting with something like a door) --for now, we can touch grass outside the "house"
-[x] make inventory work and make an item that is transferable though a container and pick it up from a place --WIP
-[x] make stats work
-[ ] add cashier lines
-[ ] complete the shop
-[ ] make a workspace (macdonalds, or wendonalds)
-
-ill figure out more later
