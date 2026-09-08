@@ -13,6 +13,7 @@ extern "C" {
 #include "src/headers/outside_home.hpp"
 #include "src/headers/items.hpp"
 #include "src/headers/supermarket.hpp"
+#include "src/headers/wendonalds.hpp"
 
 //the seed that the program will use
 //it may or may not be changed to anything you wish >:)
@@ -83,6 +84,7 @@ int main(void) {
     init_home();
     init_outside_home();
     initshop();
+    initWendonalds();
     
     //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
@@ -214,6 +216,20 @@ int main(void) {
                     room = 2;
                 }
 
+                if (CheckCollisionRecs(guyHitbox, outside_wendonalds.hitbox) && IsKeyPressed(KEY_E)) {
+
+                    //sfx
+                    PlaySound(door_int);
+
+                    //make him eneter to the right of the door 
+                    //guyX = market_exit.x + 110;
+
+                    //guyY = market_exit.y;
+
+                    //go to another room
+                    room = 3;
+                }
+
                 break;
 
             //the supermarket
@@ -265,6 +281,10 @@ int main(void) {
                 }
 
                 break;
+
+            case 3:
+
+            break;
 
             //if something somehow goes wrong
             default:
@@ -352,12 +372,16 @@ int main(void) {
                 }
 
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
+
                 //oh yeah and about supermarket, when leaving, you go outside, but the cashier needs
                 //to greet everytime yyou enter, so allow the chat bubble to appear
                 write_enable_bubble_timer = true;
 
                 //same with the random greeting
                 write_enable_random_greeting = true;
+
+
+                DrawTexture(outside_wendonalds.tex, outside_wendonalds.x, outside_wendonalds.y, WHITE);
                 break;
                 
             //the supermarket
@@ -439,6 +463,10 @@ int main(void) {
 
                 break;
             }
+
+            case 3:
+
+            break;
 
             //if it somehow goes wrong
             default:

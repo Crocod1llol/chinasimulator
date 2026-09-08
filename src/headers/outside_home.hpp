@@ -13,6 +13,7 @@ extern Part maybe_flowers;
 //exits
 extern interact_part outside_door_to_home;
 extern interact_part outside_supermarket;
+extern interact_part outside_wendonalds;
 
 
 //vectors
