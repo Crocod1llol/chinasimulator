@@ -1,10 +1,12 @@
 #that folder is just my planning, its not going to get pushed
 misc/*
+misc/
 
 #ignore stuff that is linux only
-lib/*
-compile.sh
 game
+
+#remove windows stuff
+game.exe
 
 #ignore unnecesary stuff
 todo.txt 
