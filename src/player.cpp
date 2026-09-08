@@ -1,6 +1,6 @@
 //btw, this file also includes player inventory, so yeah
 extern "C" {
-    #include "../lib/raylib.h"
+    #include "../lib-include/raylib.h"
 }
 
 #include <vector>

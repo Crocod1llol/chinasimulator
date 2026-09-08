@@ -1,6 +1,6 @@
 //this file has the initialization of other files and logic of objects and stats
 extern "C" {
-    #include "lib/raylib.h"
+    #include "lib-include/raylib.h"
 }
 
 #include <iostream>

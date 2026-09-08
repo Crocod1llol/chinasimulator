@@ -1,5 +1,5 @@
 extern "C" {
-    #include "../lib/raylib.h"
+    #include "../lib-include/raylib.h"
 }
 
 #include "headers/general_parts.hpp"
@@ -187,8 +187,7 @@ void transfer_inv_to_cont(container *cont) {
     }
 }
 
-//functions to help define item slots in *almost* any container
-//its still a help tho
+//functions to help define item slots in *almost* any shop container
 //notice: put this in the drawing part because it also attempts to draw on screen
 void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2 slot3, Vector2 slot4, Vector2 slot5, Vector2 slot6) {
 
@@ -313,12 +312,6 @@ void every_frame_inv_func_items() {
 
         //simplified var so that i dont have to write the spagetti to check if its been interacted
         bool inv_interacted = CheckCollisionRecs((Rectangle){(float)slotX, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-
-        //if its interacted, then transmit the slot it has been interacted
-        if (inv_interacted) {
-            inv_slot_interacted = i;
-
-        }
 
         switch(inventory_items.at(i)) {
 

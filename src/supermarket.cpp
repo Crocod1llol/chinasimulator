@@ -1,5 +1,5 @@
 extern "C" {
-    #include "../lib/raylib.h"
+    #include "../lib-include/raylib.h"
 }
 
 #include <vector>
@@ -33,7 +33,7 @@ typedef struct shop_container {
 
     bool isInteracted = false;
 
-    Rectangle hitbox = {x, y, sizeX, sizeY};
+    Rectangle hitbox = {x - 30/2, y - 30/2, sizeX + 30, sizeY + 30};
 
 } shop_container;
 

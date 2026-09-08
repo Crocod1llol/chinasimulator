@@ -1,5 +1,5 @@
 extern "C" {
-    #include "../lib/raylib.h"
+    #include "../lib-include/raylib.h"
 }
 
 #include <vector>
