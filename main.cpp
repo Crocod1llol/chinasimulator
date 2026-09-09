@@ -305,6 +305,20 @@ int main(void) {
                     room = 1;
                 }
 
+                //vectors 
+                for (auto i : wend_int_parts) {
+
+                    //set var based on if its colliding hitboxes and E being held
+                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
+
+                        i->isInteracted = true;
+
+                    } else {
+
+                        i->isInteracted = false;
+                    }
+                }
+
             break;
 
             //if something somehow goes wrong
@@ -497,6 +511,18 @@ int main(void) {
                 //draw structs
                 
                 DrawTexture(wendonalds_exit.tex, wendonalds_exit.x, wendonalds_exit.y, WHITE);
+
+                //draw from vectors
+                for (auto i : wend_int_parts) {
+
+                    DrawTexture(i->tex, i->x, i->y, WHITE);
+                }
+
+                for (auto i : wend_parts) {
+
+                    DrawTexture(i.tex, i.x, i.y, WHITE);
+                }
+
 
             break;
 

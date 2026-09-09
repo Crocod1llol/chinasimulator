@@ -33,7 +33,7 @@ void init_home() {
     outside_door_from_home = {350, 0, 90, 150, LoadTexture("resources/img/textures/door_90x150.png")};
 
 
-    tester1 = (container){20, 300, 100, 75, 6, {1, 1, 0, 2, 2, 2}, LoadTexture("resources/img/textures/chest_100x75.png")};
+    tester1 = {20, 300, 100, 75, 6, {0, 0, 0, 2, 2, 2}, LoadTexture("resources/img/textures/chest_100x75.png")};
 
     chair_and_table = {550, 380, 350, 200, LoadTexture("resources/img/textures/chair_and_table_350x200.png")};
     lamp = {570, 320, 75, 125, LoadTexture("resources/img/textures/lamp_75x125.png")};
