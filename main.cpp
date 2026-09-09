@@ -68,8 +68,10 @@ int main(void) {
     //textures that i dont know where to put them so ill leave them in the main.cpp file cause yeah
     Texture2D container_6_slots = LoadTexture("resources/img/other/container_6_slots.png");
 
-    //sfx
+    //universal sfx
     Sound door_int = LoadSound("resources/sfx/door_int.ogg");
+
+    Sound market_door_int = LoadSound("resources/sfx/shop_entrance_ring.ogg");
 
     //misc vars
     
@@ -88,6 +90,9 @@ int main(void) {
     
     //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
+
+    //start wendonalds_theme
+    PlayMusicStream(wendonalds_theme);
 
     //al timers get created here so that the start time doesnt reset
 
@@ -205,7 +210,7 @@ int main(void) {
                 if (CheckCollisionRecs(guyHitbox, outside_supermarket.hitbox) && IsKeyPressed(KEY_E)) {
 
                     //sfx
-                    PlaySound(door_int);
+                    PlaySound(market_door_int);
 
                     //make him eneter to the right of the door 
                     guyX = market_exit.x + 110;
@@ -219,12 +224,12 @@ int main(void) {
                 if (CheckCollisionRecs(guyHitbox, outside_wendonalds.hitbox) && IsKeyPressed(KEY_E)) {
 
                     //sfx
-                    PlaySound(door_int);
+                    PlaySound(market_door_int);
 
                     //make him eneter to the right of the door 
-                    //guyX = market_exit.x + 110;
+                    guyX = wendonalds_exit.x + 110;
 
-                    //guyY = market_exit.y;
+                    guyY = wendonalds_exit.y;
 
                     //go to another room
                     room = 3;
@@ -239,7 +244,7 @@ int main(void) {
                 if (CheckCollisionRecs(market_exit.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
 
                     //sfx
-                    PlaySound(door_int);
+                    PlaySound(market_door_int);
 
                     //set pos to the other door 
                     guyX = outside_supermarket.x;
@@ -282,7 +287,23 @@ int main(void) {
 
                 break;
 
+            //wendonalds 
             case 3:
+
+                //check if the exit door in shop has been interacted
+                if (CheckCollisionRecs(wendonalds_exit.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
+
+                    //sfx
+                    PlaySound(market_door_int);
+
+                    //set pos to the other door 
+                    guyX = outside_wendonalds.x;
+                    //add door height so it doesnt spawn in door
+                    guyY = outside_wendonalds.y + outside_wendonalds.sizeY;
+
+                    //go to another room
+                    room = 1;
+                }
 
             break;
 
@@ -464,7 +485,18 @@ int main(void) {
                 break;
             }
 
+            //wendonalds 
             case 3:
+
+                //update and continue playing the ambient sound
+                UpdateMusicStream(wendonalds_theme);
+
+                //floort 
+                DrawTexture(wendonalds_floor, 0, 0, WHITE);
+
+                //draw structs
+                
+                DrawTexture(wendonalds_exit.tex, wendonalds_exit.x, wendonalds_exit.y, WHITE);
 
             break;
 
