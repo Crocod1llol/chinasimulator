@@ -169,21 +169,25 @@ void transfer_inv_to_cont(container *cont) {
 
                 //if we found the desired slot, store in variable and get out of here
                 available_spot = i;
+
+                //if all passed, then make the switch
+                cont->container_item_ids.at(available_spot) = inventory_items.at(inv_slot_interacted);
+                inventory_items.at(inv_slot_interacted) = 0;
+
                 break;
 
             }
         }
 
         //checking of all spots are taken
+        /*
         if (available_spot == 255) {
 
             //if yes, then return nothing and exit func
             return;
         }
+        */
         
-        //if all passed, then make the switch
-        cont->container_item_ids.at(available_spot) = inventory_items.at(inv_slot_interacted);
-        inventory_items.at(inv_slot_interacted) = 0;
     }
 }
 
@@ -312,6 +316,11 @@ void every_frame_inv_func_items() {
 
         //simplified var so that i dont have to write the spagetti to check if its been interacted
         bool inv_interacted = CheckCollisionRecs((Rectangle){(float)slotX, guySlotY, 32, 32}, mouseHitbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+
+        //transmit the interacted spot to other funcs where it might need it
+        if (inv_interacted) {
+            inv_slot_interacted = i;
+        }
 
         switch(inventory_items.at(i)) {
 
