@@ -73,10 +73,15 @@ int main(void) {
 
     Sound market_door_int = LoadSound("resources/sfx/shop_entrance_ring.ogg");
 
+    Sound cool_ding = LoadSound("resources/sfx/ding.ogg");
+
     //misc vars
     
     //var so that the random greeting doesnt reset mid convo
     bool write_enable_random_greeting = true;
+
+    //var so that the food_cooker texture doesnt change a million times
+    bool write_enable_food_cooker_tex = true;
 
 	//init
     init_player();
@@ -104,6 +109,13 @@ int main(void) {
     //also a var so that the bubble timer keeps its start time and doesnt change
     bool write_enable_bubble_timer = true;
 
+    //food cooker timer
+    Timer food_cooker_timer = {10.0};
+    food_cooker_timer.start_time = 0.0;
+
+    //ding timer so the sfx is not spammed and being played
+    Timer food_cooker_ding_timer = {1.5};
+    bool write_enable_ding_timer = true;
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -319,6 +331,74 @@ int main(void) {
                     }
                 }
 
+                //activate the food cooker if its interacted
+                if (CheckCollisionRecs(food_cooker.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
+
+                    switch (food_cooker_state) {
+                    
+                        //if food cooker is off without food
+                        case 0: 
+
+                            //set state that its cooking
+                            food_cooker_state = 1;
+
+                            //start the cook timer
+                            food_cooker_timer.lifetime = GetTime();
+
+                            //allow the texture to be modified
+                            write_enable_food_cooker_tex = true;
+
+                        break;
+
+                        //the cooker is running, switch state when it finished
+                        case 1:
+
+                            if (isTimerDone(&food_cooker_timer)) {
+
+                                food_cooker_state = 2;
+
+                                //allow the texture to be modified
+                                write_enable_food_cooker_tex = true;
+                            }
+
+                        break;
+
+                        //food cooker finished, has food, grab food and put into player inv
+                        case 2:
+
+                            //allow the texture to be modified
+                            write_enable_food_cooker_tex = true;
+
+                            food_cooker_state = 0;
+
+                        break;
+                        
+                    }
+
+                }
+
+                //activate the sound even if its not interacted
+                if (isTimerDone(&food_cooker_timer) && food_cooker_timer.start_time != 0) {
+
+                    //refresh the timer if needed
+                    if (write_enable_ding_timer) {
+
+                        food_cooker_ding_timer.start_time = GetTime();
+
+                        write_enable_ding_timer = false;
+
+                        std::cout << "wrote the ding timer\n";
+                    }
+
+                    //make timer stuff so the sfx isnt spammed and still runs
+                    if (isTimerDone(&food_cooker_ding_timer)) {
+
+                        PlaySound(cool_ding);
+
+                        write_enable_ding_timer = true;
+                    }
+                }
+
             break;
 
             //if something somehow goes wrong
@@ -508,8 +588,26 @@ int main(void) {
                 //floort 
                 DrawTexture(wendonalds_floor, 0, 0, WHITE);
 
-                //draw structs
-                
+                //draw replace food_cooker texture based of if its on or not
+                if (food_cooker_state == 1 && write_enable_food_cooker_tex) {
+
+                    UnloadTexture(food_cooker.tex);
+
+                    food_cooker.tex = LoadTexture("resources/img/textures/yes_food_food_cooker_200x175.png");
+
+                    write_enable_food_cooker_tex = false;
+
+                //iff all of these states dont match, then default to the off texture
+                } else if (write_enable_food_cooker_tex){
+
+                    UnloadTexture(food_cooker.tex);
+
+                    food_cooker.tex = LoadTexture("resources/img/textures/no_food_food_cooker_200x175.png");
+
+                    write_enable_food_cooker_tex = false;
+                }
+
+                //draw struct
                 DrawTexture(wendonalds_exit.tex, wendonalds_exit.x, wendonalds_exit.y, WHITE);
 
                 //draw from vectors

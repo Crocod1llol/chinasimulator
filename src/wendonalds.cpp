@@ -23,6 +23,10 @@ interact_part wend_counter = {};
 //the part where you will get food to serve
 interact_part food_cooker = {};
 
+//the var is self explanatory
+//0 - turned off; 1 - on, cooking; 2 - food finished, turned off
+unsigned short int food_cooker_state = 0;
+
 //vectors 
 std::vector<interact_part*> wend_int_parts;
 
