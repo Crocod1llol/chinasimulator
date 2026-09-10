@@ -10,7 +10,7 @@ also you are a fat chinese btw
 
 # Compilation/Building the game
 
-**On Linux:** You will need the g++ compiler and have x11 libs to make this game, consult your package manager
+**On Linux:** You will need the g++ compiler and have x11 dev kit to build this game, consult your package manager
 
 **On Windows:** You can use the mingw compiler if you already have, if not, then:
 
