@@ -27,6 +27,8 @@ Texture2D test_object_1;
 
 Texture2D burger_2;
 
+Texture2D serving_fries_3;
+
 //sound
 Sound troll;
 
@@ -38,6 +40,8 @@ void init_items() {
     test_object_1 = LoadTexture("resources/img/textures/items/1_test_obj.png");
 
     burger_2 = LoadTexture("resources/img/textures/items/2_burger.png");
+
+    serving_fries_3 = LoadTexture("resources/img/textures/items/3_serving_fries.png");
 
     //init sounds
     troll = LoadSound("resources/sfx/items/troll.ogg");
@@ -62,6 +66,8 @@ void burger_2_func() {
 
     PlaySound(eat);
 }
+
+//item 3 is the wendonalds serving fries, so it wont have a func to do anything
 
 //variable that is responsible for transmitting the interacted slot
 //default value is 255
@@ -179,15 +185,6 @@ void transfer_inv_to_cont(container *cont) {
             }
         }
 
-        //checking of all spots are taken
-        /*
-        if (available_spot == 255) {
-
-            //if yes, then return nothing and exit func
-            return;
-        }
-        */
-        
     }
 }
 
@@ -264,6 +261,12 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
             case 2:
 
                 DrawTexture(burger_2, current_slot_pos.x, current_slot_pos.y, WHITE);
+            break;
+
+            case 3:
+
+                DrawTexture(serving_fries_3, current_slot_pos.x, current_slot_pos.y, WHITE);
+
             break;
 
             //if something goes wrong
@@ -360,6 +363,12 @@ void every_frame_inv_func_items() {
                     //then del from inv
                     inventory_items.at(i) = 0;
                 }
+            break;
+
+            case 3:
+
+                DrawTexture(serving_fries_3, slotX, guySlotY, WHITE);
+
             break;
 
             default:

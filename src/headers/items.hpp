@@ -17,6 +17,8 @@ extern Texture2D test_object_1;
 
 extern Texture2D burger_2;
 
+extern Texture2D serving_fries_3;
+
 //all sounds
 
 extern Sound troll;
