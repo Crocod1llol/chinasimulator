@@ -343,7 +343,7 @@ int main(void) {
                             food_cooker_state = 1;
 
                             //start the cook timer
-                            food_cooker_timer.lifetime = GetTime();
+                            food_cooker_timer.start_time = GetTime();
 
                             //allow the texture to be modified
                             write_enable_food_cooker_tex = true;
@@ -377,8 +377,8 @@ int main(void) {
 
                 }
 
-                //activate the sound even if its not interacted
-                if (isTimerDone(&food_cooker_timer) && food_cooker_timer.start_time != 0) {
+                //activate the sound even if its not interacted so it can signal when its done
+                if (food_cooker_state == 1 && isTimerDone(&food_cooker_timer) && food_cooker_timer.start_time != 0) {
 
                     //refresh the timer if needed
                     if (write_enable_ding_timer) {
@@ -386,8 +386,6 @@ int main(void) {
                         food_cooker_ding_timer.start_time = GetTime();
 
                         write_enable_ding_timer = false;
-
-                        std::cout << "wrote the ding timer\n";
                     }
 
                     //make timer stuff so the sfx isnt spammed and still runs
@@ -398,6 +396,8 @@ int main(void) {
                         write_enable_ding_timer = true;
                     }
                 }
+
+                std::cout << food_cooker_state << "\n";
 
             break;
 
