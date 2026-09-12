@@ -43,6 +43,13 @@ bool isTimerDone(Timer* timer) {
     }
 }
 
+//return the remaining time in secs
+int GetRemainingTime(Timer* timer) {
+
+    //its just math bro :cry:
+    return (int)timer->lifetime - ( (int)GetTime() - (int)timer->start_time );
+}
+
 
 //var to keep track of the room
 //0 - home, 1 - outside home, 2 - supermarket, 
@@ -363,8 +370,19 @@ int main(void) {
 
                         break;
 
-                        //food cooker finished, has food, grab food and put into player inv
+                        //food cooker finished, has food, put food and put into player inv
                         case 2:
+
+                            //search for empty spot 
+                            for (int i = 0; i < MAX_INV_SLOTS; i++) {
+
+                                if (inventory_items.at(i) == 0) {
+
+                                    inventory_items.at(i) = 3;
+
+                                    break;
+                                }
+                            }
 
                             //allow the texture to be modified
                             write_enable_food_cooker_tex = true;
@@ -396,8 +414,6 @@ int main(void) {
                         write_enable_ding_timer = true;
                     }
                 }
-
-                std::cout << food_cooker_state << "\n";
 
             break;
 
@@ -597,8 +613,18 @@ int main(void) {
 
                     write_enable_food_cooker_tex = false;
 
-                //iff all of these states dont match, then default to the off texture
+                
+                } else if (food_cooker_state == 2 && write_enable_food_cooker_tex) {
+
+                    UnloadTexture(food_cooker.tex);
+
+                    food_cooker.tex = LoadTexture("resources/img/textures/finished_food_cooker_200x175.png");
+
+                    write_enable_food_cooker_tex = false;
+
                 } else if (write_enable_food_cooker_tex){
+                //if all of these states dont match, then default to the off texture
+                
 
                     UnloadTexture(food_cooker.tex);
 
@@ -606,6 +632,7 @@ int main(void) {
 
                     write_enable_food_cooker_tex = false;
                 }
+
 
                 //draw struct
                 DrawTexture(wendonalds_exit.tex, wendonalds_exit.x, wendonalds_exit.y, WHITE);
@@ -621,6 +648,20 @@ int main(void) {
                     DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
 
+                //draw the remaining time it takes to finish cooking
+                if (food_cooker_state == 1) {
+
+                    //if the time isnt 0, then draw the normal time
+                    if (GetRemainingTime(&food_cooker_timer) >= 0) {
+
+                        DrawText(TextFormat("%d", GetRemainingTime(&food_cooker_timer)), 923, 760, 22, BLACK);
+
+                    //if not, draw 0 to avoid weird confusion with negativity
+                    } else {
+
+                        DrawText("0", 923, 760, 22, RED);
+                    }
+                }
 
             break;
 
