@@ -124,7 +124,7 @@ void transfer_cont_to_inv(container *cont, Vector2 slot1, Vector2 slot2, Vector2
             int empty_slot = 255;
 
             //now check for empty space in player inv
-            for (int a = 0; a < 3; a++) {
+            for (int a = 0; a < MAX_INV_SLOTS; a++) {
 
                 //if yes, then get da hell out of here
                 if (inventory_items.at(a) == 0) {
@@ -293,7 +293,7 @@ void every_frame_inv_func_items() {
     int slotX = 0;
 
     //iteratee over all slots
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < MAX_INV_SLOTS; i++) {
 
         //select slot pos based on what slot the loop is in
         switch (i) {

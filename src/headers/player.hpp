@@ -48,6 +48,9 @@ extern int inv_interact_state;
 
 #define guySlot3X 166
 
+//max inv slots
+#define MAX_INV_SLOTS 3
+
 //functions
 void init_player();
 

@@ -8,6 +8,9 @@ extern "C" {
 //the maximum hunger and hp is 100
 #define MAX_HUMANOID_STATS 100
 
+//max inv slots
+#define MAX_INV_SLOTS 3
+
 //extern the room var since its from main and player respawns in home
 extern unsigned int room;
 
@@ -20,7 +23,7 @@ Texture2D inventorySlot;
 
 //all player's stats
 int guyHp = 100;
-int guyHunger = 85;
+int guyHunger = 80;
 int cash = 100;
 int card = 0;
 
@@ -90,7 +93,7 @@ void every_frame_player() {
     if (guyHp <= 0) {
     
     	//also drop all player items if they died
-    	for (unsigned int i = 0; i < inventory_items.size(); i++) {
+    	for (unsigned int i = 0; i < MAX_INV_SLOTS; i++) {
     		inventory_items.at(i) = 0;
     	}
 
