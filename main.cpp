@@ -242,6 +242,7 @@ int main(void) {
 
                 if (CheckCollisionRecs(guyHitbox, outside_wendonalds.hitbox) && IsKeyPressed(KEY_E)) {
 
+
                     //sfx
                     PlaySound(market_door_int);
 
@@ -327,8 +328,8 @@ int main(void) {
                 //vectors 
                 for (auto i : wend_int_parts) {
 
-                    //set var based on if its colliding hitboxes and E being held
-                    if (IsKeyDown(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
+                    //E being pressed is better than being held in this restaurant
+                    if (IsKeyPressed(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
 
                         i->isInteracted = true;
 
@@ -339,7 +340,7 @@ int main(void) {
                 }
 
                 //activate the food cooker if its interacted
-                if (CheckCollisionRecs(food_cooker.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
+                if (food_cooker.isInteracted) {
 
                     switch (food_cooker_state) {
                     
@@ -412,6 +413,24 @@ int main(void) {
                         PlaySound(cool_ding);
 
                         write_enable_ding_timer = true;
+                    }
+                }
+
+                //check and use the serving fries from player's inventory and give them money
+                if (wend_counter.isInteracted) {
+
+                    //check for fries
+                    //id for fries is 3
+                    for (int i = 0; i < MAX_INV_SLOTS; i++) {
+
+                        if (inventory_items.at(i) == 3) {
+
+                            inventory_items.at(i) = 0;
+
+                            cash = cash + 2;
+
+                            PlaySound(cha_ching);
+                        }
                     }
                 }
 
