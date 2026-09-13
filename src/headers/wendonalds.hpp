@@ -17,6 +17,8 @@ extern Music wendonalds_theme;
 //any structs 
 extern interact_part wendonalds_exit;
 
+extern interact_part wend_counter;
+
 extern interact_part food_cooker;
 
 //var is self explanatory
