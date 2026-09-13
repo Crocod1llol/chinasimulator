@@ -68,7 +68,7 @@ char selected_line_2[100];
 Music shop_theme;
 
 //PlaySound
-Sound buy_item;
+Sound cha_ching;
 
 //vectors
 std::vector <interact_part*> shop_int_parts;
@@ -85,7 +85,7 @@ void initshop()
 	floortileshop = LoadTexture("resources/img/textures/storebg1000x800.png");
 
     //sounds
-    buy_item = LoadSound("resources/sfx/cha_ching.ogg");
+    cha_ching = LoadSound("resources/sfx/cha_ching.ogg");
 
     //cashier chat bubbl
     chat_bubble = LoadTexture("resources/img/other/chat_bubble.png");
@@ -118,7 +118,7 @@ do {                                                             \
                 inventory_items.at(a) = cont->container_contents.at(i).item_id;    \
                 cont->container_contents.at(i).item_id = 0;    \
                                                                 \
-                PlaySound(buy_item);                                     \
+                PlaySound(cha_ching);                                     \
             }                                                    \
         }                                                        \
     }                                                            \

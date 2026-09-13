@@ -59,6 +59,9 @@ extern char selected_line_2[100];
 //the shop theme
 extern Music shop_theme;
 
+//extern sounds
+extern Sound cha_ching;
+
 //vectors
 extern std::vector <interact_part*> shop_int_parts;
 
