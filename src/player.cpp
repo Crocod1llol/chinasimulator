@@ -35,14 +35,14 @@ float guyX;
 float guyY;
 
 //others
-int playerspeed = 5;
+const unsigned int playerspeed = 5;
 
 //hitbox rectangle
 //it will get defined in the main loop so its values will update
 Rectangle guyHitbox;
 
 //the vector that contains all item ids in inventory
-std::vector <size_t> inventory_items = {2, 2, 1};
+std::vector <size_t> inventory_items = {0, 0, 0};
 
 //var to keep track of what state does the inventory interact do
 //0 - normal, click on item to do stuff
@@ -75,7 +75,7 @@ bool soundCount = true;
 void resetPlayer() {
 
     guyHp = 50;
-    guyHunger = 86;
+    guyHunger = 55;
 
     guyX = GetRenderWidth()/2.0;
     guyY = GetRenderHeight()/2.0;
