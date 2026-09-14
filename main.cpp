@@ -15,6 +15,11 @@ extern "C" {
 #include "src/headers/supermarket.hpp"
 #include "src/headers/wendonalds.hpp"
 
+//tell main that these intro funcs exits
+bool intro_game();
+
+void init_intro();
+
 //the seed that the program will use
 //it may or may not be changed to anything you wish >:)
 #define seed time(0)
@@ -93,18 +98,23 @@ int main(void) {
 	//init
     init_player();
     init_items();
+    init_intro();
 
     //init places
     init_home();
     init_outside_home();
     initshop();
     initWendonalds();
+
+    //var to see if the intro/ main menu os running
+    bool intro_running = true;
     
     //start the shop theme so it can continue in shop
     PlayMusicStream(shop_theme);
 
     //start wendonalds_theme
     PlayMusicStream(wendonalds_theme);
+
 
     //al timers get created here so that the start time doesnt reset
 
@@ -132,6 +142,37 @@ int main(void) {
 
         //update mouse hitbox with new vars 
         mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
+
+        //INTRO --------------------------
+
+        //while the intro is on (duh)
+        while (intro_running) {
+
+            //run the intro for the game
+            bool intro_state = intro_game();
+
+            if (intro_state) {
+
+                intro_running = false;
+            }
+
+            //also check if the user pressed space to skip intro
+            if (IsKeyPressed(KEY_SPACE)) {
+
+                intro_running = false;
+
+                break;
+            }
+
+            //and dont forget that its a while loop so close game if requested so
+            if (WindowShouldClose()) {
+
+                CloseWindow();        // Close window and OpenGL context
+                CloseAudioDevice();
+
+                return 0;
+            }
+        }
 
         //PLAYER -----------------------------------------------------
 
