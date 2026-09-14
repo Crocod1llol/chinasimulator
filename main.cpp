@@ -69,7 +69,7 @@ int main(void) {
     const int screenWidth = 1000; 
     const int screenHeight = 800; 
 
-    InitWindow(screenWidth, screenHeight, "title test m"); 
+    InitWindow(screenWidth, screenHeight, "ChinaSimulator"); 
     InitAudioDevice();
 
     //disable exit key
