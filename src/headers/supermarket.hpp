@@ -72,4 +72,6 @@ void initshop();
 
 void shop_container_definer(shop_container *cont, Vector2 slot1, Vector2 slot2, Vector2 slot3, Vector2 slot4, Vector2 slot5, Vector2 slot6); 
 
+void shop_container_restock(shop_container *cont, unsigned int seed);
+
 #endif

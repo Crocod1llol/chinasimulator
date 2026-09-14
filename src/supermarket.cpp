@@ -1,3 +1,4 @@
+#include <iostream>
 extern "C" {
     #include "../lib-include/raylib.h"
 }
@@ -50,6 +51,12 @@ interact_part cashier = {};
 
 //vending machine ok
 shop_container vending_machine = {};
+
+//all possible items that can appear in a shop container
+const unsigned int all_shop_container_items[] = {1, 2};
+
+//this will help to restock items in shop cont
+#define MAX_SHOP_CONT_ITEMS 2
 
 //cashier chat bubble
 Texture2D chat_bubble;
@@ -198,7 +205,7 @@ void shop_container_definer(shop_container *cont, Vector2 slot1, Vector2 slot2, 
 
             //if something goes wrong
             default:
-                printf("FATAL ERROR: invalid item id at slot %d with id %d", i, cont -> container_contents.at(i).item_id);
+                printf("FATAL ERROR: invalid item id shop contaier at slot %d with id %d", i, cont -> container_contents.at(i).item_id);
 
                 exit(-1);
             break;
@@ -207,5 +214,57 @@ void shop_container_definer(shop_container *cont, Vector2 slot1, Vector2 slot2, 
         //increasing the values a bit so the text is at the correct pos
         DrawText(TextFormat("%d Cash", cont->container_contents.at(i).price), current_slot_hitbox.x - 7, current_slot_hitbox.y + 45, 16, BLACK);
 
+    }
+}
+
+void shop_container_restock(shop_container *cont, unsigned int seed) {
+
+    srand(seed);
+
+    //first, remove all items
+    for (int i = 0; i < cont->max_items; i++) {
+
+        cont->container_contents.at(i).item_id = 0;
+        cont->container_contents.at(i).price = 0;
+    }
+
+    //now select the random slots
+    const unsigned short int slot1 = rand() % cont->max_items;
+    const unsigned short int slot2 = rand() % cont->max_items;
+    const unsigned short int slot3 =  rand() % cont->max_items;
+
+    //stock 3 items in the shop cont
+    for (unsigned short int i = 0; i < 3; i++) {
+
+        unsigned short int sel_slot;
+
+        //select slot based of the var i
+        switch (i) {
+
+            case 0:
+
+                sel_slot = slot1;
+            break;
+
+            case 1:
+
+                sel_slot = slot2;
+            break;
+
+            case 2:
+
+                sel_slot = slot3;
+            break;
+
+            default:
+                
+                std::cout << "supermarket.cpp shop_container_restock() FATAL ERROR: value of i is invalid\n";
+                exit(-1);
+            break;
+        }
+
+        //now put the selected iten shop cont with a random price
+        cont->container_contents.at(sel_slot).item_id = all_shop_container_items[rand() % MAX_SHOP_CONT_ITEMS];
+        cont->container_contents.at(sel_slot).price = rand() % (15 + 1) + 25;
     }
 }

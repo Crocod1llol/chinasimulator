@@ -22,7 +22,7 @@ void init_intro();
 
 //the seed that the program will use
 //it may or may not be changed to anything you wish >:)
-#define seed time(0)
+#define SEED time(0)
 
 //timer struct to make a timer
 //example of a Timer struct
@@ -134,11 +134,13 @@ int main(void) {
     Timer food_cooker_ding_timer = {1.5};
     bool write_enable_ding_timer = true;
 
+    Timer vending_machine_restrock = {600};
+
     // Main game loop
     while (!WindowShouldClose()) {
 
         //randomize the seed everytime
-        srand(seed);
+        srand(SEED);
 
         //update mouse hitbox with new vars 
         mouseHitbox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
@@ -194,6 +196,13 @@ int main(void) {
         }
 
         //MAP OBEJCTS -----------------------------------------------------------------------
+        
+        //check when the timer is done so the vending machine can restock
+        if (isTimerDone(&vending_machine_restrock)) {
+            shop_container_restock(&vending_machine, SEED);
+
+            vending_machine_restrock.start_time = GetTime();
+        }
         
         //run all parts collisions, interaction, logic based on what room we are in
         switch (room) {
