@@ -14,7 +14,7 @@ also you are a fat chinese btw
 
 **On Windows:** You can use the mingw compiler if you already have, if not, then:
 
-Download the compiler at https://pixeldrain.dev/u/s7TWNLbb
+Download the compiler at https://github.com/brechtsanders/winlibs_mingw/releases/download/16.2.0posix-14.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-16.2.0-mingw-w64ucrt-14.0.0-r1.zip
 
 Unzip the file.
 
