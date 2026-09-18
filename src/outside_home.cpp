@@ -11,7 +11,6 @@ Texture outside_home_grass;
 
 //declaration
 //vectors
-std::vector <interact_part*> outside_exits;
 std::vector <Part> outside_home_parts;
 
 //parts
@@ -21,6 +20,7 @@ Part maybe_flowers = {};
 interact_part outside_door_to_home = {};
 interact_part outside_supermarket = {};
 interact_part outside_wendonalds = {};
+interact_part outside_china_temple = {};
 
 
 void init_outside_home() {
@@ -33,6 +33,7 @@ void init_outside_home() {
     outside_door_to_home = {400, (float)GetRenderHeight() - 150, 90, 150, LoadTexture("resources/img/textures/door_90x150.png")};
     outside_supermarket = { 700,300, 300,200, LoadTexture("resources/img/textures/supermarket300x200.png") };
     outside_wendonalds = {300, 50, 300, 200, LoadTexture("resources/img/textures/wendonalds_300x200.png")};
+    outside_china_temple = { 13, 550, 350, 250, LoadTexture("resources/img/textures/temple_350x250.png") };
 
     //Parts
     maybe_flowers = {75, 170, 150, 100, LoadTexture("resources/img/textures/bad_flowers_150x100.png")};
@@ -42,7 +43,5 @@ void init_outside_home() {
     //part vector
     outside_home_parts.push_back(maybe_flowers);
 
-    //exists vector
-    outside_exits.push_back(&outside_door_to_home);
-}
+}   
 

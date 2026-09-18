@@ -305,6 +305,23 @@ int main(void) {
                     room = 3;
                 }
 
+                if (CheckCollisionRecs(guyHitbox, outside_china_temple.hitbox) && IsKeyPressed(KEY_E)) {
+
+
+                    //sfx
+                    PlaySound(door_int);
+
+                    //make him eneter to the right of the door 
+                    /*
+                    guyX = wendonalds_exit.x + 110;
+
+                    guyY = wendonalds_exit.y;
+                    */
+
+                    //go to another room
+                    room = 4;
+                }
+
                 break;
 
             //the supermarket
@@ -486,6 +503,10 @@ int main(void) {
 
             break;
 
+            case 4: 
+
+            break;
+
             //if something somehow goes wrong
             default:
                 std::cout << "switch_case_logic: game is sad, room var is modified \n";
@@ -566,11 +587,6 @@ int main(void) {
                     DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
 
-                for (auto i: outside_exits) {
-
-                    DrawTexture(i -> tex, i -> x, i -> y, WHITE);
-                }
-
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
 
                 //oh yeah and about supermarket, when leaving, you go outside, but the cashier needs
@@ -580,8 +596,11 @@ int main(void) {
                 //same with the random greeting
                 write_enable_random_greeting = true;
 
+                DrawTexture(outside_door_to_home.tex, outside_door_to_home.x, outside_door_to_home.y, WHITE);
 
                 DrawTexture(outside_wendonalds.tex, outside_wendonalds.x, outside_wendonalds.y, WHITE);
+
+                DrawTexture(outside_china_temple.tex, outside_china_temple.x, outside_china_temple.y, WHITE);
                 break;
                 
             //the supermarket
@@ -731,6 +750,10 @@ int main(void) {
                         DrawText("0", 923, 760, 22, RED);
                     }
                 }
+
+            break;
+
+            case 4:
 
             break;
 

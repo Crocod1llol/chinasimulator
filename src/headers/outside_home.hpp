@@ -14,11 +14,10 @@ extern Part maybe_flowers;
 extern interact_part outside_door_to_home;
 extern interact_part outside_supermarket;
 extern interact_part outside_wendonalds;
-
+extern interact_part outside_china_temple;
 
 //vectors
 extern std::vector <Part> outside_home_parts;
-extern std::vector <interact_part*> outside_exits;
 
 //funcs
 void init_outside_home();
