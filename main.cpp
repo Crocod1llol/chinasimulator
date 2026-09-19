@@ -14,6 +14,7 @@ extern "C" {
 #include "src/headers/items.hpp"
 #include "src/headers/supermarket.hpp"
 #include "src/headers/wendonalds.hpp"
+#include "src/headers/temple.hpp"
 
 //tell main that these intro funcs exits
 bool intro_game();
@@ -105,6 +106,7 @@ int main(void) {
     init_outside_home();
     initshop();
     initWendonalds();
+    init_temple();
 
     //var to see if the intro/ main menu os running
     bool intro_running = true;
@@ -309,14 +311,12 @@ int main(void) {
 
 
                     //sfx
-                    PlaySound(door_int);
+                    PlaySound(temple_door_sfx);
 
                     //make him eneter to the right of the door 
-                    /*
-                    guyX = wendonalds_exit.x + 110;
+                    guyX = temple_door.x + 50;
 
-                    guyY = wendonalds_exit.y;
-                    */
+                    guyY = temple_door.y + 35;
 
                     //go to another room
                     room = 4;
@@ -503,8 +503,24 @@ int main(void) {
 
             break;
 
+            //the temple
             case 4: 
 
+
+                if (CheckCollisionRecs(guyHitbox, temple_door.hitbox) && IsKeyPressed(KEY_E)) {
+
+
+                    //sfx
+                    PlaySound(temple_door_sfx);
+
+                    //make him eneter to the right of the door 
+                    guyX = outside_china_temple.x + 110;
+
+                    guyY = outside_china_temple.y + 75;
+
+                    //go to another room
+                    room = 1;
+                }
             break;
 
             //if something somehow goes wrong
@@ -753,8 +769,10 @@ int main(void) {
 
             break;
 
+            //the temple
             case 4:
 
+                DrawTexture(temple_door.tex, temple_door.x, temple_door.y, WHITE);
             break;
 
             //if it somehow goes wrong
