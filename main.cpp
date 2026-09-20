@@ -117,6 +117,8 @@ int main(void) {
     //start wendonalds_theme
     PlayMusicStream(wendonalds_theme);
 
+    //start china temple music
+    PlayMusicStream(temple_music);
 
     //al timers get created here so that the start time doesnt reset
 
@@ -534,14 +536,13 @@ int main(void) {
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(LIGHTGRAY);
-
-
         //draw everything that needs to be drawn in the respective room
         switch (room) {
 
             //this is all part of room 0, aka home
             case 0:
+        
+                ClearBackground(LIGHTGRAY);
 
                 //draw everything from stuct vectors
                 for (auto i : home_doors) {
@@ -772,7 +773,14 @@ int main(void) {
             //the temple
             case 4:
 
+                ClearBackground(GOLD);
+
+                //update the temple music so it plays
+                UpdateMusicStream(temple_music);
+
                 DrawTexture(temple_door.tex, temple_door.x, temple_door.y, WHITE);
+
+                DrawTexture(king_jing_um.tex, king_jing_um.x, king_jing_um.y, WHITE);
             break;
 
             //if it somehow goes wrong
