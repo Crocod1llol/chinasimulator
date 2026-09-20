@@ -138,7 +138,13 @@ int main(void) {
     Timer food_cooker_ding_timer = {1.5};
     bool write_enable_ding_timer = true;
 
+    //a timer to restock vending machines every 10 mins
     Timer vending_machine_restrock = {600};
+
+    //the chat bubble for king jing um
+    Timer jing_chat_timer = {3.0};
+    jing_chat_timer.start_time = 0.0;
+    bool write_enable_king_chat = true;
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -508,7 +514,7 @@ int main(void) {
             //the temple
             case 4: 
 
-
+                //exit from temple
                 if (CheckCollisionRecs(guyHitbox, temple_door.hitbox) && IsKeyPressed(KEY_E)) {
 
 
@@ -523,6 +529,22 @@ int main(void) {
                     //go to another room
                     room = 1;
                 }
+
+
+                //vectors 
+                for (auto i : temple_int_parts) {
+
+                    //E being pressed is better than being held in this restaurant
+                    if (IsKeyPressed(KEY_E) && CheckCollisionRecs(guyHitbox, i->hitbox)) {
+
+                        i->isInteracted = true;
+
+                    } else {
+
+                        i->isInteracted = false;
+                    }
+                }
+
             break;
 
             //if something somehow goes wrong
@@ -771,7 +793,10 @@ int main(void) {
             break;
 
             //the temple
-            case 4:
+            case 4: {
+
+                //grab the rng value
+                const unsigned int rng = rand();
 
                 ClearBackground(GOLD);
 
@@ -780,8 +805,52 @@ int main(void) {
 
                 DrawTexture(temple_door.tex, temple_door.x, temple_door.y, WHITE);
 
-                DrawTexture(king_jing_um.tex, king_jing_um.x, king_jing_um.y, WHITE);
-            break;
+                //draw from vectors
+
+                for (auto i : temple_int_parts) {
+
+                    DrawTexture(i->tex, i->x, i->y, WHITE);
+                }
+
+                //set start time to timer so it works
+                if (write_enable_king_chat) {
+
+                    jing_chat_timer.start_time = GetTime();
+
+                    write_enable_king_chat = false;
+                }
+
+                
+                //make jing say a random line from interactions 
+                if (king_jing_um.isInteracted) {
+                    strncpy(jing_selected_line1, jing_interact_lines[rng % 3], 50);
+
+                    //and also fill the other sel line with the second part of the line if it has been selected 
+                    if (rng % 3 == 2) {
+
+                        strncpy(jing_selected_line2, nuclear_bomb_interaction_line, 50);
+                    } else {
+
+                        //set nothing in the sel line2 if otherwise
+                        strncpy(jing_selected_line2, "", 1);
+                    }
+
+                    //and activate bubble timer
+                    write_enable_king_chat = true;
+                }
+
+                //check if the timer didnt expire
+                if (!isTimerDone(&jing_chat_timer)) {
+                    //draw chat bubble texture on cashier
+                    DrawTexture(chat_bubble, king_jing_um.x - 200, king_jing_um.y + 105, WHITE);
+
+                    //draw text
+                    DrawText(jing_selected_line1, king_jing_um.x - 180, king_jing_um.y + 130, 25, BLACK);
+                    DrawText(jing_selected_line2, king_jing_um.x - 180, king_jing_um.y + 158, 25, BLACK);
+                }
+
+                break;
+            }
 
             //if it somehow goes wrong
             default:
