@@ -80,6 +80,8 @@ void resetPlayer() {
     guyX = GetRenderWidth()/2.0;
     guyY = GetRenderHeight()/2.0;
 
+    cash = 0;
+
     room = 0;
     
     soundCount = true;
