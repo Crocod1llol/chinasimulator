@@ -15,6 +15,7 @@ extern "C" {
 #include "src/headers/supermarket.hpp"
 #include "src/headers/wendonalds.hpp"
 #include "src/headers/temple.hpp"
+#include "src/headers/npc.hpp"
 
 //tell main that these intro funcs exits
 bool intro_game();
@@ -100,6 +101,7 @@ int main(void) {
     init_player();
     init_items();
     init_intro();
+    init_npc_asset();
 
     //init places
     init_home();
@@ -143,8 +145,12 @@ int main(void) {
 
     //the chat bubble for king jing um
     Timer jing_chat_timer = {3.0};
-    jing_chat_timer.start_time = 0.0;
-    bool write_enable_king_chat = true;
+    jing_chat_timer.start_time = 0.1;
+    bool write_enable_king_chat = false;
+
+    //TEMP::::::::: just spawning an npc for test
+    npc returned_npc = return_npc(65, 413);
+    alive_npcs.push_back(&returned_npc);
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -626,6 +632,16 @@ int main(void) {
                     DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
 
+                //ncp
+                for (auto i : alive_npcs) {
+                    
+                    //only draw if part of room and alive
+                    if (i->room_number == 1 && i->health > 0) {
+                        DrawTexture(i->tex, i->x, i->y, WHITE);
+                        std::cout << "hi\n";
+                    } 
+                }
+    
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
 
                 //oh yeah and about supermarket, when leaving, you go outside, but the cashier needs
@@ -820,7 +836,6 @@ int main(void) {
                     write_enable_king_chat = false;
                 }
 
-                
                 //make jing say a random line from interactions 
                 if (king_jing_um.isInteracted) {
                     strncpy(jing_selected_line1, jing_interact_lines[rng % 3], 50);
