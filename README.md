@@ -27,3 +27,11 @@ Then at the bottom, you will see a button named "Enviroment variables..."
 At system variables, double click on Path
 
 Add a new path, being your copied path at the compiler, click on ok, then ok, then ok, and then just run "compile.bat" and your done, you should see an game.exe, run it
+
+# RoadMap
+
+*Note that any update's planned contents may change at any time*
+
+**Alpha 2.0 (WIP):** NPC's, king jing um, nuclear bomb
+
+**Alpha 3.0:** Therapist, manager to get more money
