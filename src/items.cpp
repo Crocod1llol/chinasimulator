@@ -29,6 +29,8 @@ Texture2D burger_2;
 
 Texture2D serving_fries_3;
 
+Texture2D nuclear_bomb_4;
+
 //sound
 Sound troll;
 
@@ -42,6 +44,8 @@ void init_items() {
     burger_2 = LoadTexture("resources/img/textures/items/2_burger.png");
 
     serving_fries_3 = LoadTexture("resources/img/textures/items/3_serving_fries.png");
+
+    nuclear_bomb_4 = LoadTexture("resources/img/textures/items/4_nuclear_bomb.png");
 
     //init sounds
     troll = LoadSound("resources/sfx/items/troll.ogg");
@@ -269,6 +273,11 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
 
             break;
 
+            case 4:
+
+                DrawTexture(nuclear_bomb_4, current_slot_pos.x, current_slot_pos.y, WHITE);
+            break;
+
             //if something goes wrong
             default:
                 printf("FATAL ERROR: invalid item id at slot %d with id %d", i, cont -> container_item_ids.at(i));
@@ -368,6 +377,14 @@ void every_frame_inv_func_items() {
             case 3:
 
                 DrawTexture(serving_fries_3, slotX, guySlotY, WHITE);
+
+            break;
+
+            case 4:
+
+                //NOTE: THIS ITEM WILL BE ABLE TO KILL NPCS BUT I NEED TO ADD NPCS FIRST
+                
+                DrawTexture(nuclear_bomb_4, slotX, guySlotY, WHITE);
 
             break;
 
