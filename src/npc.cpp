@@ -26,7 +26,7 @@ Texture2D npc1_tex;
 //Texture2D npc3_tex;
 
 //vector to keep track the amount of npcs spawned
-std::vector<npc*> alive_npcs;
+std::vector<npc> alive_npcs;
 
 //init textures and other assets for npcs
 void init_npc_asset() {
@@ -35,8 +35,8 @@ void init_npc_asset() {
     //implement the other npc textures later
 }
 
-//returns an npc
-npc return_npc(int x, int y) {
+//spawn npc
+void spawn_npc(int x, int y) {
 
     //the future npc
     npc target_npc;
@@ -69,12 +69,12 @@ npc return_npc(int x, int y) {
     }
     */
 
-    target_npc.tex = LoadTexture("resources/img/textures/npc1.png");
+    target_npc.tex = npc1_tex;
 
     //spawn them outside
     target_npc.room_number = 1;
-    target_npc.x = y;
-    target_npc.y = x;
+    target_npc.x = x;
+    target_npc.y = y;
 
-    return target_npc;
+    alive_npcs.push_back(target_npc);
 }

@@ -22,10 +22,10 @@ extern Texture2D npc2_tex;
 extern Texture2D npc3_tex;
 
 //vector to keep track the amount of npcs spawned
-extern std::vector<npc*> alive_npcs;
+extern std::vector<npc> alive_npcs;
 
 //funcs
 void init_npc_asset();
 
-npc return_npc(int x, int y);
+void spawn_npc(int x, int y);
 #endif
