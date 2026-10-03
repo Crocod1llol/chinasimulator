@@ -14,6 +14,8 @@ typedef struct npc {
     unsigned short int room_number;
 
     Texture2D tex;
+
+    Rectangle hitbox = {x, y, 100, 100};
 } npc;
 
 

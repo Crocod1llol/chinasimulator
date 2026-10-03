@@ -17,13 +17,15 @@ typedef struct npc {
     unsigned short int room_number;
 
     Texture2D tex;
+
+    Rectangle hitbox = {x, y, 100, 100};
 } npc;
 
 //load all textures for npcs
 //TEMP: ALL TEXTURES ARENT MADE YET
 Texture2D npc1_tex;
-//Texture2D npc2_tex;
-//Texture2D npc3_tex;
+Texture2D npc2_tex;
+Texture2D npc3_tex;
 
 //vector to keep track the amount of npcs spawned
 std::vector<npc> alive_npcs;
@@ -32,23 +34,21 @@ std::vector<npc> alive_npcs;
 void init_npc_asset() {
 
     npc1_tex = LoadTexture("resources/img/textures/npc1.png");
-    //implement the other npc textures later
+    npc2_tex = LoadTexture("resources/img/textures/npc2.png");
+    npc3_tex = LoadTexture("resources/img/textures/npc3.png");
 }
 
 //spawn npc
 void spawn_npc(int x, int y) {
 
     //the future npc
-    npc target_npc;
+    npc target_npc = {};
     target_npc.health = 100;
 
     //select a random texture
-    srand(time(0));
-    //const unsigned int selected_number = ( rand() % 3 ) + 1;
+    const unsigned int selected_number = ( rand() % 3 ) + 1;
 
     //now select based on the number
-    //TEMP: it just selects the first texture
-    /*
     switch (selected_number) {
 
         case 1:
@@ -67,9 +67,6 @@ void spawn_npc(int x, int y) {
         break;
 
     }
-    */
-
-    target_npc.tex = npc1_tex;
 
     //spawn them outside
     target_npc.room_number = 1;
