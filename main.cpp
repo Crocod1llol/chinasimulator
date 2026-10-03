@@ -1,4 +1,5 @@
 //this file has the initialization of other files and logic of objects and stats
+#include <cstdlib>
 extern "C" {
     #include "lib-include/raylib.h"
 }
@@ -26,8 +27,8 @@ void init_intro();
 //it may or may not be changed to anything you wish >:)
 #define SEED time(0)
 
-//timer struct to make a timer
-//example of a Timer struct
+//timer struct to make a timer \n
+//example of a Timer struct:
 // Timer cool_timer = {2.0};
 typedef struct Timer {
 
@@ -148,8 +149,9 @@ int main(void) {
     jing_chat_timer.start_time = 0.1;
     bool write_enable_king_chat = false;
 
-    //TEMP::::::::: just spawning an npc for test
-    spawn_npc(423, 300);
+    //the timer to spawn npcs every 5 mins
+    Timer npc_spawn_timer = {10};
+    //bool write_enable_npc_timer = true;
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -210,6 +212,15 @@ int main(void) {
             hunger_timer.start_time = GetTime();
         }
 
+        //NCPS -------------------------------
+        //check if any npc has 0 health to despawn
+        for (long unsigned int i = 0; i < alive_npcs.size(); i++) {
+
+            if (alive_npcs.at(i).health <= 0) {
+
+                alive_npcs.erase(alive_npcs.begin() + i);
+            }
+        }
         //MAP OBEJCTS -----------------------------------------------------------------------
         
         //check when the timer is done so the vending machine can restock
@@ -219,7 +230,7 @@ int main(void) {
             vending_machine_restrock.start_time = GetTime();
         }
         
-        //run all parts collisions, interaction, logic based on what room we are in
+        //run all parts collisions, interaction, logic based on what room we are in --------------------_+!#_$@!&)(*#$^(@&*!#^$(&*^!(#&*649*!&@^(#*&$(!@&*3)))))
         switch (room) {
 
             //home
@@ -333,6 +344,20 @@ int main(void) {
 
                     //go to another room
                     room = 4;
+                }
+
+                //NPCS OUTSIDE -------------------
+                
+                //check if timer is done so we can spawn npcs
+                if (isTimerDone(&npc_spawn_timer)) {
+
+                    //rand coords
+                    const int rand_x = (rand() % 786) + 15;
+                    const int rand_y = (rand() % 400) + 213;
+
+                    spawn_npc(rand_x, rand_y);
+
+                    npc_spawn_timer.start_time = GetTime();
                 }
 
                 break;
@@ -632,13 +657,10 @@ int main(void) {
                 }
 
                 //ncp
-                for (auto i : alive_npcs) {
+                for (const auto &i : alive_npcs) {
                     
-                    //only draw if part of room and alive
-                    //if (i->room_number == 1 && i->health > 0) {
-                        DrawTexture(i.tex, i.x, i.y, WHITE);
-                        //std::cout << "hi\n";
-                    //} 
+                    //DrawTexture(alive_npcs.at(i).tex, alive_npcs.at(i).x, alive_npcs.at(i).y, WHITE);
+                    DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
     
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
@@ -837,10 +859,10 @@ int main(void) {
 
                 //make jing say a random line from interactions 
                 if (king_jing_um.isInteracted) {
-                    strncpy(jing_selected_line1, jing_interact_lines[rng % 3], 50);
+                    strncpy(jing_selected_line1, jing_interact_lines[rng % 5], 50);
 
                     //and also fill the other sel line with the second part of the line if it has been selected 
-                    if (rng % 3 == 2) {
+                    if (rng % 5 == 4) {
 
                         strncpy(jing_selected_line2, nuclear_bomb_interaction_line, 50);
                     } else {
