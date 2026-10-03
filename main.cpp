@@ -149,8 +149,7 @@ int main(void) {
     bool write_enable_king_chat = false;
 
     //TEMP::::::::: just spawning an npc for test
-    npc returned_npc = return_npc(65, 413);
-    alive_npcs.push_back(&returned_npc);
+    spawn_npc(423, 300);
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -636,10 +635,10 @@ int main(void) {
                 for (auto i : alive_npcs) {
                     
                     //only draw if part of room and alive
-                    if (i->room_number == 1 && i->health > 0) {
-                        DrawTexture(i->tex, i->x, i->y, WHITE);
-                        std::cout << "hi\n";
-                    } 
+                    //if (i->room_number == 1 && i->health > 0) {
+                        DrawTexture(i.tex, i.x, i.y, WHITE);
+                        //std::cout << "hi\n";
+                    //} 
                 }
     
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
@@ -906,7 +905,6 @@ int main(void) {
         //run items code that need to run every frame
         //ITS BEING RAN IN THE DRAWING SECTIONS BECAUSE IT ALSO DRAWS TEXTURES
         every_frame_inv_func_items();
-
 
         //debug menu
         if (IsKeyDown(KEY_F3)) {
