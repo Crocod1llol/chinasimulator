@@ -13,7 +13,7 @@ extern interact_part temple_door;
 extern interact_part king_jing_um;
 
 //king jing um's text lines
-extern const char *jing_interact_lines[3];
+extern const char *jing_interact_lines[5];
 //and also to fix on the screen, the last line in interaction_lines will have another line a bit down (has 21 chars)
 extern const char *nuclear_bomb_interaction_line;
 

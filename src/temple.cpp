@@ -16,7 +16,7 @@ interact_part temple_door = {};
 interact_part king_jing_um = {};
 
 //king jing um's text lines
-const char *jing_interact_lines[] = {"what?", "you want something?", "if you give me 200$,", };
+const char *jing_interact_lines[] = {"what?", "you want something?", "i am king jing um", "i came to visit china", "if you give me 200$,", };
 //and also to fix on the screen, the last line in interaction_lines will have another line a bit down (has 21 chars)
 const char *nuclear_bomb_interaction_line = "i will give you bomb";
 
