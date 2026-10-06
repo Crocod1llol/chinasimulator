@@ -151,7 +151,6 @@ int main(void) {
 
     //the timer to spawn npcs every 5 mins
     Timer npc_spawn_timer = {10};
-    //bool write_enable_npc_timer = true;
 
     // Main game loop
     while (!WindowShouldClose()) {
@@ -221,6 +220,7 @@ int main(void) {
                 alive_npcs.erase(alive_npcs.begin() + i);
             }
         }
+
         //MAP OBEJCTS -----------------------------------------------------------------------
         
         //check when the timer is done so the vending machine can restock
@@ -573,6 +573,24 @@ int main(void) {
 
                         i->isInteracted = false;
                     }
+                }
+
+                //purchase bomb if we have enough money
+                if (king_jing_um.isInteracted && cash >= 200) {
+                
+                    //put bomb in a free spot
+                    for (int i = 0; i < MAX_INV_SLOTS; i++) {
+                        if (inventory_items.at(i) == 0) {
+
+                            inventory_items.at(i) = 4;
+
+                            cash = cash - 200;
+
+                            PlaySound(cha_ching);
+                            break;
+                        }
+                    }
+
                 }
 
             break;
