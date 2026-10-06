@@ -25,6 +25,8 @@ extern Sound troll;
 
 extern Sound eat;
 
+extern Sound explode;
+
 //any eventual variables:
 
 //variable that is responsible for transmitting the inv interacted slot
@@ -46,5 +48,12 @@ void item_definer_6_slots(container *cont, Vector2 slot1, Vector2 slot2, Vector2
 //example: void test_obj_1_func()
 
 void test_obj_1_func();
+
+void burger_2_func();
+
+//item 3 is the wendonalds serving fries, so it wont have a func to do anything
+
+//returns true or false based if it was able to kill an npc so we can later remove the item in the slot
+bool nuclear_bomb_4_func();
 
 #endif

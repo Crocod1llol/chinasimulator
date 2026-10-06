@@ -12,6 +12,8 @@ extern "C" {
 //include player to manipulate values from it
 #include "headers/player.hpp"
 
+#include "headers/npc.hpp"
+
 //extern the mouse hitbox since we will need it
 extern Rectangle mouseHitbox;
 
@@ -33,8 +35,8 @@ Texture2D nuclear_bomb_4;
 
 //sound
 Sound troll;
-
 Sound eat;
+Sound explode;
 
 //load all item textures and init stuff
 void init_items() {
@@ -49,8 +51,8 @@ void init_items() {
 
     //init sounds
     troll = LoadSound("resources/sfx/items/troll.ogg");
-
     eat = LoadSound("resources/sfx/items/eat.ogg");
+    explode = LoadSound("resources/sfx/items/vine_boom_explode.ogg");
 }
 
 //ALL ITEM EXECUTION FUNCTIONS
@@ -72,6 +74,25 @@ void burger_2_func() {
 }
 
 //item 3 is the wendonalds serving fries, so it wont have a func to do anything
+
+//returns true or false based if it was able to kill an npc so we can later remove the item in the slot
+bool nuclear_bomb_4_func() {
+
+    for (long unsigned int i = 0; i < alive_npcs.size(); i++) {
+        if (CheckCollisionRecs(guyHitbox, alive_npcs.at(i).hitbox)) {
+
+            alive_npcs.at(i).tex = ash;
+
+            //set hp to 1 so we can start a countdown until death so the ash texture will render
+            alive_npcs.at(i).health = 1;
+
+            PlaySound(explode);
+            return true;
+        }
+    }
+
+    return false;
+}
 
 //variable that is responsible for transmitting the interacted slot
 //default value is 255
@@ -382,9 +403,16 @@ void every_frame_inv_func_items() {
 
             case 4:
 
-                //NOTE: THIS ITEM WILL BE ABLE TO KILL NPCS BUT I NEED TO ADD NPCS FIRST
-                
                 DrawTexture(nuclear_bomb_4, slotX, guySlotY, WHITE);
+
+                if (inv_interact_state == 0 && inv_interacted) {
+                    bool ret_val = nuclear_bomb_4_func();
+
+                    //remove item from inv if it killed an npc
+                    if (ret_val) {
+                        inventory_items.at(i) = 0;
+                    }
+                }
 
             break;
 
