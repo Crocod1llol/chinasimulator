@@ -27,6 +27,8 @@ Texture2D npc1_tex;
 Texture2D npc2_tex;
 Texture2D npc3_tex;
 
+Texture2D ash;
+
 //vector to keep track the amount of npcs spawned
 std::vector<npc> alive_npcs;
 
@@ -36,6 +38,8 @@ void init_npc_asset() {
     npc1_tex = LoadTexture("resources/img/textures/npc1.png");
     npc2_tex = LoadTexture("resources/img/textures/npc2.png");
     npc3_tex = LoadTexture("resources/img/textures/npc3.png");
+
+    ash = LoadTexture("resources/img/textures/ash.png");
 }
 
 //spawn npc
@@ -72,6 +76,9 @@ void spawn_npc(int x, int y) {
     target_npc.room_number = 1;
     target_npc.x = x;
     target_npc.y = y;
+
+    //update hitbox so values are correct
+    target_npc.hitbox = (Rectangle){target_npc.x, target_npc.y, 100, 100};
 
     alive_npcs.push_back(target_npc);
 }

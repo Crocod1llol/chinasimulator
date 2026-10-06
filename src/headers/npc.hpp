@@ -15,13 +15,14 @@ typedef struct npc {
 
     Texture2D tex;
 
-    Rectangle hitbox = {x, y, 100, 100};
+    Rectangle hitbox;
 } npc;
-
 
 extern Texture2D npc1_tex;
 extern Texture2D npc2_tex;
 extern Texture2D npc3_tex;
+
+extern Texture2D ash;
 
 //vector to keep track the amount of npcs spawned
 extern std::vector<npc> alive_npcs;
