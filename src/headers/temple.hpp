@@ -4,6 +4,7 @@
 #define TEMPLE_HPP
 
 struct interact_part;
+struct Part;
 
 //the best music
 extern Music temple_music;
@@ -11,6 +12,8 @@ extern Music temple_music;
 //every structs
 extern interact_part temple_door;
 extern interact_part king_jing_um;
+
+extern Texture2D chineze_lamp;
 
 //king jing um's text lines
 extern const char *jing_interact_lines[5];
@@ -26,6 +29,8 @@ extern Sound temple_door_sfx;
 
 //vectors
 extern std::vector<interact_part*> temple_int_parts;
+
+extern std::vector<Part> temple_parts;
 
 //funcs
 void init_temple();
