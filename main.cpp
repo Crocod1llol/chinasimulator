@@ -861,6 +861,9 @@ int main(void) {
                 DrawTexture(temple_door.tex, temple_door.x, temple_door.y, WHITE);
 
                 //draw from vectors
+                for (auto i : temple_parts) {
+                    DrawTexture(i.tex, i.x, i.y, WHITE);
+                }
 
                 for (auto i : temple_int_parts) {
 
