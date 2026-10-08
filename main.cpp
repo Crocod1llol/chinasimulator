@@ -152,6 +152,16 @@ int main(void) {
     //the timer to spawn npcs every 5 mins
     Timer npc_spawn_timer = {10};
 
+    //THE TIMERS TO make npcs move randomly
+    Timer npc_move_frame = {0.2};
+    Timer npc_move_cooldown = {5.0};
+
+    //TMEPPPPPP
+    bool random_moveb = true;
+
+    npc ok = {250, 500, 100, 1, npc3_tex};
+    alive_npcs.push_back(ok);
+
     // Main game loop
     while (!WindowShouldClose()) {
 
@@ -358,6 +368,22 @@ int main(void) {
                     spawn_npc(rand_x, rand_y);
 
                     npc_spawn_timer.start_time = GetTime();
+                }
+
+                if (random_moveb) {
+
+                    const int ok = random_move_coord(alive_npcs.at(0));
+
+                    if (!isTimerDone(&npc_move_frame)) {
+                        alive_npcs.at(0).x += 10;
+                        if ((!alive_npcs.at(0).x) >= ok && isTimerDone(&npc_move_frame)) {
+                            npc_move_frame.start_time = GetTime();
+                        } else {
+
+                            //random_moveb = false;
+                        }
+                    }
+
                 }
 
                 break;
@@ -674,12 +700,6 @@ int main(void) {
                     DrawTexture(i.tex, i.x, i.y, WHITE);
                 }
 
-                //ncp
-                for (const auto &i : alive_npcs) {
-                    
-                    //DrawTexture(alive_npcs.at(i).tex, alive_npcs.at(i).x, alive_npcs.at(i).y, WHITE);
-                    DrawTexture(i.tex, i.x, i.y, WHITE);
-                }
     
                 DrawTexture(outside_supermarket.tex, outside_supermarket.x, outside_supermarket.y, WHITE);
 
@@ -695,6 +715,13 @@ int main(void) {
                 DrawTexture(outside_wendonalds.tex, outside_wendonalds.x, outside_wendonalds.y, WHITE);
 
                 DrawTexture(outside_china_temple.tex, outside_china_temple.x, outside_china_temple.y, WHITE);
+
+                //ncp
+                for (const auto &i : alive_npcs) {
+                    
+                    DrawTexture(i.tex, i.x, i.y, WHITE);
+                }
+
                 break;
                 
             //the supermarket
