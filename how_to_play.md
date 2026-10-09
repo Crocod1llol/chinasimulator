@@ -1,4 +1,4 @@
-# chinasimulator Alpha 1.0 guide
+# chinasimulator Alpha 2.0 guide
 
 So.. you have found yourself in "china" town! (Not to be confused with other stuff)
 
@@ -14,6 +14,11 @@ to the container, or the opposite, click on items from the container to transfer
 
 If you aren't blind, you probably observed the door in your house, you can press E on it to go outside.
 From there, you can go to the supermarket, or to wendonalds (your working place)
+
+**NPCS**
+
+You will see these other fat chinese people. An npc will start every 2 minutes and at the start of the game, one npc will spawn.
+They are harmless and they can be killed with a nuclear bomb (item id 4).
 
 **SUPERMARKET:**
 
@@ -35,3 +40,9 @@ You would interact with the food cooker to turn it on, and after 10 seconds, the
 (it also makes a ding sound when its done) and then you would grab the fries in your inventory (make sure you have space)
 
 Then with the fries in the inventory, you will interact with the counter and serve the fries.
+
+**china temple**
+
+The place where *king jing um* stays, as he is visiting china.
+He will sell you a nuclear bomb for 200 cash, and with that nuclear bomb you can blow up npcs.
+
