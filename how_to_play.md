@@ -17,6 +17,14 @@ From there, you can go to the supermarket, or to wendonalds (your working place)
 
 **NPCS**
 
+There are 2 types of NPCS:
+
+--Predefined ones;
+
+They are NPCS that either sell you something or are just there to talk with you. These NPCS cannot be killed.
+
+--Randomly Spawned ones:
+
 You will see these other fat chinese people. An npc will start every 2 minutes and at the start of the game, one npc will spawn.
 They are harmless and they can be killed with a nuclear bomb (item id 4).
 
