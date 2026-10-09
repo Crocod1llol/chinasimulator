@@ -5,7 +5,6 @@ extern "C" {
 
 #include <vector>
 #include <cstdlib>
-//#include <ctime>
 
 typedef struct npc {
 
@@ -81,35 +80,4 @@ void spawn_npc(int x, int y) {
     target_npc.hitbox = (Rectangle){target_npc.x, target_npc.y, 100, 100};
 
     alive_npcs.push_back(target_npc);
-}
-
-//returns the values so main can then move all npcs by a timer
-int random_move_coord(npc target_npc) {
-    
-    const unsigned int rng = rand();
-
-    //declare here because of if's scope
-    int future_x;
-
-    //the direction: to the left or to the right
-    unsigned short int x_direction;
-    if (rng % 2) {
-        x_direction = -1;
-    } else {
-        x_direction = 1;
-    }
-    
-    future_x = target_npc.x - (rng % 450) + 140;
-
-    //target_npc->x = future_x * x_direction;
-
-    //also make sure it doesnt go offbounds
-    //subtract by 100 so the texture doesnt go outside
-    if (future_x * x_direction > GetRenderWidth()){
-        future_x = GetRenderWidth() - 100;
-    } else if (future_x * x_direction < 0) {
-        future_x = 0;
-    }
-
-    return future_x * x_direction;
 }

@@ -32,5 +32,4 @@ void init_npc_asset();
 
 void spawn_npc(int x, int y);
 
-int random_move_coord(npc target_npc);
 #endif

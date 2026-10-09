@@ -149,19 +149,12 @@ int main(void) {
     jing_chat_timer.start_time = 0.1;
     bool write_enable_king_chat = false;
 
-    //the timer to spawn npcs every 5 mins
-    Timer npc_spawn_timer = {10};
+    //the timer to spawn npcs every 2 mins
+    Timer npc_spawn_timer = {120};
 
-    //THE TIMERS TO make npcs move randomly
-    Timer npc_move_frame = {0.2};
-    Timer npc_move_cooldown = {5.0};
-
-    //TMEPPPPPP
-    bool random_moveb = true;
-
-    npc ok = {250, 500, 100, 1, npc3_tex};
-    alive_npcs.push_back(ok);
-
+    //spawn an npc at the start
+    spawn_npc(421, 324);
+    
     // Main game loop
     while (!WindowShouldClose()) {
 
@@ -195,7 +188,7 @@ int main(void) {
             //and dont forget that its a while loop so close game if requested so
             if (WindowShouldClose()) {
 
-                CloseWindow();        // Close window and OpenGL context
+                CloseWindow();        
                 CloseAudioDevice();
 
                 return 0;
@@ -247,7 +240,6 @@ int main(void) {
             case 0:
 
                 //checks if player near object and he pressed "E"
-                //using address so it modifies the actual object, not a copy of it
                 for (auto i : home_int_parts) {
                     
                     //set var based on if its colliding hitboxes and E being held
@@ -263,7 +255,6 @@ int main(void) {
 
                 //this is container
                 //checks if player near object and he pressed "E"
-                //using address so it modifies the actual object, not a copy of it
                 for (auto i : home_containers) {
                     
                     //set var based on if its colliding hitboxes and E being held
@@ -301,7 +292,6 @@ int main(void) {
                 //the door to home
                 if (CheckCollisionRecs(guyHitbox, outside_door_to_home.hitbox) && IsKeyPressed(KEY_E)) {
 
-                     //sfx
                      PlaySound(door_int);
                      
                      //set pos to the other door 
@@ -314,7 +304,6 @@ int main(void) {
                 }
                 if (CheckCollisionRecs(guyHitbox, outside_supermarket.hitbox) && IsKeyPressed(KEY_E)) {
 
-                    //sfx
                     PlaySound(market_door_int);
 
                     //make him eneter to the right of the door 
@@ -328,8 +317,6 @@ int main(void) {
 
                 if (CheckCollisionRecs(guyHitbox, outside_wendonalds.hitbox) && IsKeyPressed(KEY_E)) {
 
-
-                    //sfx
                     PlaySound(market_door_int);
 
                     //make him eneter to the right of the door 
@@ -343,8 +330,6 @@ int main(void) {
 
                 if (CheckCollisionRecs(guyHitbox, outside_china_temple.hitbox) && IsKeyPressed(KEY_E)) {
 
-
-                    //sfx
                     PlaySound(temple_door_sfx);
 
                     //make him eneter to the right of the door 
@@ -361,7 +346,6 @@ int main(void) {
                 //check if timer is done so we can spawn npcs
                 if (isTimerDone(&npc_spawn_timer)) {
 
-                    //rand coords
                     const int rand_x = (rand() % 786) + 15;
                     const int rand_y = (rand() % 400) + 213;
 
@@ -370,21 +354,6 @@ int main(void) {
                     npc_spawn_timer.start_time = GetTime();
                 }
 
-                if (random_moveb) {
-
-                    const int ok = random_move_coord(alive_npcs.at(0));
-
-                    if (!isTimerDone(&npc_move_frame)) {
-                        alive_npcs.at(0).x += 10;
-                        if ((!alive_npcs.at(0).x) >= ok && isTimerDone(&npc_move_frame)) {
-                            npc_move_frame.start_time = GetTime();
-                        } else {
-
-                            //random_moveb = false;
-                        }
-                    }
-
-                }
 
                 break;
 
@@ -394,7 +363,6 @@ int main(void) {
                 //check if the exit door in shop has been interacted
                 if (CheckCollisionRecs(market_exit.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
 
-                    //sfx
                     PlaySound(market_door_int);
 
                     //set pos to the other door 
@@ -444,7 +412,6 @@ int main(void) {
                 //check if the exit door in shop has been interacted
                 if (CheckCollisionRecs(wendonalds_exit.hitbox, guyHitbox) && IsKeyPressed(KEY_E)) {
 
-                    //sfx
                     PlaySound(market_door_int);
 
                     //set pos to the other door 
@@ -484,7 +451,6 @@ int main(void) {
                             //start the cook timer
                             food_cooker_timer.start_time = GetTime();
 
-                            //allow the texture to be modified
                             write_enable_food_cooker_tex = true;
 
                         break;
@@ -496,7 +462,6 @@ int main(void) {
 
                                 food_cooker_state = 2;
 
-                                //allow the texture to be modified
                                 write_enable_food_cooker_tex = true;
                             }
 
@@ -573,8 +538,6 @@ int main(void) {
                 //exit from temple
                 if (CheckCollisionRecs(guyHitbox, temple_door.hitbox) && IsKeyPressed(KEY_E)) {
 
-
-                    //sfx
                     PlaySound(temple_door_sfx);
 
                     //make him eneter to the right of the door 
@@ -725,15 +688,13 @@ int main(void) {
                 break;
                 
             //the supermarket
-            //btw we use {} to make a scope so the compiler doesnt complain about
-            //a variable declared here to fall through another case
+            //btw we use {} to make a scope so the compiler doesnt complain about vars
             case 2: {
 
                 //grab the rng value
                 const unsigned int rng = rand();
 
                 if (write_enable_random_greeting) {
-                    //now copy the random greeting
                     strncpy(selected_line_1, greetings[rng % 3], 100);
 
                     write_enable_random_greeting = false;
@@ -766,10 +727,8 @@ int main(void) {
 
                 //check if the timer didnt expire
                 if (!isTimerDone(&bubble_timer)) {
-                    //draw chat bubble texture on cashier
                     DrawTexture(chat_bubble, cashier.x - 200, cashier.y + 135, WHITE);
 
-                    //draw text
                     DrawText(selected_line_1, cashier.x - 180, cashier.y + 160, 25, BLACK);
                 }
 
@@ -833,7 +792,6 @@ int main(void) {
 
                 } else if (write_enable_food_cooker_tex){
                 //if all of these states dont match, then default to the off texture
-                
 
                     UnloadTexture(food_cooker.tex);
 
@@ -919,16 +877,13 @@ int main(void) {
                         strncpy(jing_selected_line2, "", 1);
                     }
 
-                    //and activate bubble timer
                     write_enable_king_chat = true;
                 }
 
                 //check if the timer didnt expire
                 if (!isTimerDone(&jing_chat_timer)) {
-                    //draw chat bubble texture on cashier
                     DrawTexture(chat_bubble, king_jing_um.x - 200, king_jing_um.y + 105, WHITE);
 
-                    //draw text
                     DrawText(jing_selected_line1, king_jing_um.x - 180, king_jing_um.y + 130, 25, BLACK);
                     DrawText(jing_selected_line2, king_jing_um.x - 180, king_jing_um.y + 158, 25, BLACK);
                 }
@@ -984,14 +939,10 @@ int main(void) {
         }
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow();        
     CloseAudioDevice();
-    //--------------------------------------------------------------------------------------
         
     return 0;
 }
