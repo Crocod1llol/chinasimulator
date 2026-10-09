@@ -32,6 +32,4 @@ Add a new path, being your copied path at the compiler, click on ok, then ok, th
 
 *Note that any update's planned contents may change at any time*
 
-**Alpha 2.0 (WIP):** NPCs, king jing um, nuclear bomb
-
-**Alpha 3.0:** Therapist, manager to get more money
+**Alpha 3.0:** Therapist, manager to get more money,
